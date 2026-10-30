@@ -1,0 +1,518 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { getBrandBySlug, getUnlimitedDurationBrands } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL, AFFILIATE_DISCLOSURE } from '../../data/links';
+import {
+  diagnosticCases,
+  runawayRedFlags,
+  brandSafetyMatrix,
+  dualStackFailoverYaml,
+  runawayFaqs,
+} from '../../data/runaway-watch';
+import { breadcrumbSchema, faqPageSchema, itemListSchema } from '../../utils/schema';
+
+const guangsuyun = getBrandBySlug('guangsuyun')!;
+const guangsuyunLink = getBrandLink('guangsuyun');
+const backupBrands = getUnlimitedDurationBrands().slice(0, 4);
+
+const sCount = brandSafetyMatrix.filter((b) => b.safetyTier === 'S').length;
+const aCount = brandSafetyMatrix.filter((b) => b.safetyTier === 'A').length;
+const bCount = brandSafetyMatrix.filter((b) => b.safetyTier === 'B').length;
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '跑路预警与风控雷达', href: '/runaway-watch/' },
+];
+---
+
+<PageLayout
+  seo={{
+    title: '2026 机场跑路预警与风控雷达：真假失联自检、10大高危信号与42家安全评级',
+    description:
+      '万字级机场防跑路与防失联风控中心：5步区分官网被墙假失联与真跑路，揭秘跑路前夕10大促销与缩水信号，全站42家机场S/A/B三级运营年限评级，以及TOP 1光速云+永久流量包双栈自动容灾配置。',
+    image: '/media/immersions/silent-woods-meditation-retreat.webp',
+    imageAlt: '2026 机场跑路预警与 42 家安全评级风控雷达中心',
+    schema: [
+      breadcrumbSchema(crumbs, Astro.site),
+      faqPageSchema(runawayFaqs),
+      itemListSchema(
+        '2026 机场跑路预警与 42 家运营年限风控评级雷达',
+        '涵盖真假失联 5 步自检矩阵、跑路前夕 10 大高危信号、全站 42 家机场 S/A/B 三级抗风险评级表与双栈自动故障转移配置指南。',
+        brandSafetyMatrix.slice(0, 15).map((item, idx) => ({
+          name: `${item.name} (${item.tierLabel})`,
+          url: `/brands/${item.slug}/`,
+          description: `${item.foundedNote} · ${item.architecture} · ${item.recommendedCycle}`,
+          position: idx + 1,
+        })),
+        Astro.site,
+      ),
+    ],
+  }}
+  hero={{
+    image: { src: '/media/immersions/silent-woods-meditation-retreat.webp', alt: '' },
+    eyebrow: 'RUNAWAY WATCH & RISK RADAR · 5步失联诊断 · 42家安全评级',
+    title: '机场跑路预警与防失联风控雷达',
+    words: [{ text: '机场跑路预警' }, { text: '防失联风控雷达', serif: true }],
+    lead: '为什么机场官网突然打不开？为什么节点一排红叉 Timeout？90% 的所谓“跑路恐慌”其实只是主域名被 DNS 污染或入口 IP 轮换未更新订阅。本专题为你提供 5 步真假失联自检矩阵、10 大跑路前兆拆解、42 家机场运营资历安全评级，以及「一主一备」0.5 秒自动容灾终极方案。',
+    breadcrumbs: crumbs,
+  }}
+>
+  <Fragment slot="hero">
+    <div class="page-hero__actions">
+      <Button href="#diagnosis" variant="light">01 5步真假失联自检</Button>
+      <Button href="#red-flags" variant="glass">02 10大跑路高危信号</Button>
+      <Button href="#safety-radar" variant="glass">03 42家安全评级矩阵</Button>
+      <Button href="#dual-stack" variant="glass">04 一主一备自动容灾</Button>
+    </div>
+  </Fragment>
+
+  <!-- 01 / 真跑路还是假失联？5 步自检诊断矩阵 -->
+  <section class="section" id="diagnosis" aria-labelledby="diagnosis-title">
+    <div class="container">
+      <div class="compliance-banner" role="note">
+        <p>{AFFILIATE_DISCLOSURE}</p>
+      </div>
+
+      <SectionHeading
+        id="diagnosis-title"
+        title="01 / 机场突然连不上？先花 60 秒按这 5 步排查是「真跑路」还是「假失联」"
+        intro="根据实验室长期工单统计，超过 90% 的用户断联只是因为「官网旧域名被墙」或「好几个月没点更新订阅同步新入口 IP」，仅需 1 分钟即可自行恢复。"
+      >
+        <Button href="/faq/#emergency" variant="line">前往客户端报错急救室</Button>
+      </SectionHeading>
+
+      <div style="display: grid; gap: 20px;">
+        {diagnosticCases.map((item) => (
+          <article class="obs-card" style="padding: 26px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--color-line); margin-bottom: 16px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+                <span class="rank-chip">{item.step}</span>
+                <h3 style="font-size: 1.25rem; font-weight: 600;">{item.title}</h3>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                <span class="mini-tag">{item.probability}</span>
+                <span
+                  class:list={[
+                    'obs-pill',
+                    item.verdict === 'false-alarm'
+                      ? 'obs-pill--ok'
+                      : item.verdict === 'maintenance'
+                        ? 'obs-pill--warn'
+                        : 'mini-status--historical',
+                  ]}
+                >
+                  {item.verdictLabel}
+                </span>
+              </div>
+            </div>
+
+            <div class="brand-spec-grid" style="gap: 24px;">
+              <div>
+                <h4 style="font-size: var(--fs-xs); font-weight: 600; color: var(--color-muted); margin-bottom: 8px;">
+                  典型临床表现：
+                </h4>
+                <ul class="client-list">
+                  {item.symptoms.map((sym) => (
+                    <li>
+                      <span aria-hidden="true">•</span>
+                      <span>{sym}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p style="margin-top: 12px; font-size: var(--fs-xs); color: var(--color-stone);">
+                  <strong>10 秒验证方法：</strong> {item.howToVerify}
+                </p>
+              </div>
+
+              <div style="padding: 16px 20px; border-radius: var(--radius-md); background: var(--color-mist); border-left: 3px solid var(--color-ink);">
+                <strong style="display: block; font-size: var(--fs-xs); margin-bottom: 6px;">
+                  立即执行的恢复与处置方案：
+                </strong>
+                <p style="font-size: var(--fs-small); color: var(--color-stone); line-height: 1.65;">
+                  {item.recoveryAction}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 / 机场跑路前夕的 10 大高危预警信号 -->
+  <section class="section section--mist" id="red-flags" aria-labelledby="red-flags-title">
+    <div class="container">
+      <SectionHeading
+        id="red-flags-title"
+        title="02 / 从专线批发成本算账：任何机场出现这 10 个信号，立即停止续费"
+        intro="一条正宗的深港 IEPL 物理内网专线批发价高达 800~1,500 元 / 100Mbps / 月。看懂机房硬成本，你就再也不会被“50元包用三年”的庞氏骗局收割。"
+      />
+
+      <div class="client-cards-grid">
+        {runawayRedFlags.map((flag) => (
+          <article class="client-card">
+            <div class="client-card__head">
+              <div>
+                <span class="rank-chip">{flag.code}</span>
+                <h3>{flag.title}</h3>
+              </div>
+              <span
+                class:list={[
+                  'obs-pill',
+                  flag.riskLevel.includes('极高危') ? 'mini-status--historical' : 'obs-pill--warn',
+                ]}
+              >
+                {flag.riskLevel}
+              </span>
+            </div>
+
+            <div class="client-card__meta">
+              <div>
+                <strong>成本审计真相：</strong> {flag.costAccounting}
+              </div>
+            </div>
+
+            <p class="client-card__summary">{flag.detail}</p>
+
+            <div style="margin-top: auto; padding: 12px 14px; border-radius: var(--radius-sm); background: #E7F3EC; color: #1E5A38; font-size: var(--fs-xs);">
+              <strong>避险反制纪律：</strong> {flag.counterMeasure}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 / 全站 42 家机场运营年限与抗风险评级雷达表 -->
+  <section class="section" id="safety-radar" aria-labelledby="safety-radar-title">
+    <div class="container">
+      <SectionHeading
+        id="safety-radar-title"
+        title="03 / 42 家机场 S / A / B 三级风控池：哪些支持安心年付？哪些建议先月付？"
+        intro="我们将全站 42 家机场按「创站运营年限、底层专线架构、历史稳定性与定价模型」划分为 S 级（5~6年老牌稳健池）、A 级（成熟专线主力池）与 B 级（新锐高性价比观察池）。"
+      />
+
+      <!-- 三级评级标准说明卡片 -->
+      <div class="platform-jump-grid" style="margin-bottom: 28px;">
+        <div class="platform-jump-card" style="border-color: var(--color-sand); background: #F5F9F6;">
+          <span class="obs-pill obs-pill--ok">S 级 · 5~6年老牌稳健池 ({sCount} 家)</span>
+          <h3>支持安心年付 / 核心生产力主力</h3>
+          <p>
+            2020-2021 年起持续稳定运营至今，经历过数轮行业大洗牌与敏感期考验，拥有独立 IEPL/IPLC 专线冗余池（以 <strong>#1 光速云</strong>、<strong>#6 星岛梦</strong>、<strong>#29 WgetCloud</strong>、<strong>#36 青云梯</strong> 为代表）。
+          </p>
+        </div>
+        <div class="platform-jump-card">
+          <span class="obs-pill obs-pill--vendor">A 级 · 成熟专线主力池 ({aCount} 家)</span>
+          <h3>建议月付/季付/百元年付 + 搭配冷备</h3>
+          <p>
+            2022-2023 年上线并稳健运营的成熟专线及中转品牌，带宽充裕、流媒体与 AI 解锁优秀（以 <strong>#2 微风网络</strong>、<strong>#3 暮光加速</strong>、<strong>#4 飞猫云</strong>、<strong>#7 二猫云</strong> 为代表）。
+          </p>
+        </div>
+        <div class="platform-jump-card">
+          <span class="obs-pill obs-pill--warn">B 级 · 新锐高性价比观察池 ({bCount} 家)</span>
+          <h3>严守「先免费试用 / 月付 / 小额包」纪律</h3>
+          <p>
+            2024-2025 年上线或主打超低价的大流量新锐机场，极具性价比，适合作为下载分流或尝鲜副卡，但风控原则上不建议一次性购买多年期套餐。
+          </p>
+        </div>
+      </div>
+
+      <!-- 筛选与搜索栏 -->
+      <div class="filter-bar">
+        <div class="filter-tabs" role="tablist" aria-label="按安全等级筛选机场">
+          <button class="filter-btn is-active" type="button" data-tier-filter="all">
+            全部 42 家机场 ({brandSafetyMatrix.length})
+          </button>
+          <button class="filter-btn" type="button" data-tier-filter="S">
+            S 级 · 老牌稳健池 ({sCount})
+          </button>
+          <button class="filter-btn" type="button" data-tier-filter="A">
+            A 级 · 成熟主力池 ({aCount})
+          </button>
+          <button class="filter-btn" type="button" data-tier-filter="B">
+            B 级 · 新锐观察池 ({bCount})
+          </button>
+        </div>
+        <div class="filter-search">
+          <input
+            type="search"
+            id="radar-search-input"
+            placeholder="搜索机场名称、年份（如 2020）、IEPL..."
+            aria-label="搜索 42 家机场风控评级"
+          />
+        </div>
+      </div>
+
+      <p class="filter-count" id="radar-filter-count">
+        当前展示全部 <strong>{brandSafetyMatrix.length}</strong> 家机场风控档案
+      </p>
+
+      <!-- 42家安全雷达表格 -->
+      <div class="table-scroll">
+        <table class="comparison-table" id="safety-radar-table">
+          <thead>
+            <tr>
+              <th>排名 / 品牌</th>
+              <th>风控评级</th>
+              <th>创站资历</th>
+              <th>底层线路与协议</th>
+              <th>风控建议购买周期</th>
+              <th>入门门槛 &amp; 优惠码</th>
+              <th>风控审计评语</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {brandSafetyMatrix.map((item) => (
+              <tr
+                class:list={[{ 'is-top1': item.rank === 1 }, 'radar-row']}
+                data-tier={item.safetyTier}
+                data-search={`${item.name} ${item.foundedNote} ${item.tierLabel} ${item.architecture} ${item.recommendedCycle}`.toLowerCase()}
+              >
+                <td>
+                  <div class="table-brand">
+                    <span class="rank-chip">#{item.rank}</span>
+                    <div>
+                      <a class="table-brand__name" href={`/brands/${item.slug}/`}>
+                        {item.name}
+                      </a>
+                      <span class="table-brand__sub">{item.backupRole}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span
+                    class:list={[
+                      'obs-pill',
+                      item.safetyTier === 'S'
+                        ? 'obs-pill--ok'
+                        : item.safetyTier === 'A'
+                          ? 'obs-pill--vendor'
+                          : 'obs-pill--warn',
+                    ]}
+                  >
+                    {item.tierLabel}
+                  </span>
+                </td>
+                <td>
+                  <strong>{item.foundedNote}</strong>
+                </td>
+                <td>{item.architecture}</td>
+                <td>
+                  <strong style="color: var(--color-ink);">{item.recommendedCycle}</strong>
+                </td>
+                <td>
+                  <div>{item.entryPrice}</div>
+                  {item.couponCode !== '无' && (
+                    <span class="mini-tag mini-tag--ok" style="margin-top: 4px;">
+                      码: {item.couponCode} ({item.couponDiscount})
+                    </span>
+                  )}
+                </td>
+                <td style="max-width: 280px; font-size: var(--fs-xs); color: var(--color-stone); line-height: 1.55;">
+                  {item.riskAuditNote}
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a
+                      class="btn btn--dark btn--sm"
+                      href={item.officialUrl}
+                      target="_blank"
+                      rel={AFFILIATE_REL}
+                    >
+                      官网 <Icon name="arrow-up" size={12} />
+                    </a>
+                    <a class="btn btn--line btn--sm" href={`/brands/${item.slug}/`}>
+                      档案
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 / 永不失联终极解药：「一主一备 (Dual-Stack)」自动容灾配置 -->
+  <section class="section section--mist" id="dual-stack" aria-labelledby="dual-stack-title">
+    <div class="container">
+      <SectionHeading
+        id="dual-stack-title"
+        title="04 / 永不失联终极解药：主力 #1 光速云 IEPL + 备胎百元永久流量包"
+        intro="无论你是跨境电商、远程程序员还是重度 AI 研究者，只要在 Clash Verge Rev / Mihomo 中配置好这套 fallback 双栈容灾，哪怕遇到海底光缆割接也能全年 365 天零断网。"
+      />
+
+      <div class="brand-spec-grid">
+        <div>
+          <div class="obs-card">
+            <div class="obs-card__head">
+              <div>
+                <span class="obs-card__eyebrow">GOLDEN COMBINATION · 黄金双栈组合推荐</span>
+                <h3>主力高速专线 + 永不过期冷备流量包</h3>
+              </div>
+              <span class="obs-pill obs-pill--ok">全年 0 断网</span>
+            </div>
+
+            <div style="display: grid; gap: 16px;">
+              <div style="padding: 18px; border-radius: var(--radius-md); background: rgba(201, 183, 156, .16); border: 1px solid var(--color-sand);">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                  <span class="rank-chip">主力首选 · PRIMARY</span>
+                  <span class="mini-status mini-status--measured">2020老牌 · S级稳健</span>
+                </div>
+                <h4 style="font-size: 1.2rem; font-weight: 600; margin-top: 10px;">
+                  #1 {guangsuyun.name}（日常承担 99% 高速生产与 4K 影音流量）
+                </h4>
+                <p style="margin-top: 6px; font-size: var(--fs-xs); color: var(--color-stone); line-height: 1.6;">
+                  全线深港/沪日 IEPL 内网专线 + VLESS 协议，轻量版仅需 <strong>99元/年（59GB/月，折合 ~8.2元/月）</strong>，同时提供 <strong>147元/247GB 不限时永久流量包</strong>。结算输入专属优惠码 <code>{guangsuyunLink.couponCode}</code> 享全场 9 折。
+                </p>
+                <div style="display: flex; gap: 10px; margin-top: 14px;">
+                  <a
+                    class="btn btn--dark btn--sm"
+                    href={guangsuyunLink.registerUrl}
+                    target="_blank"
+                    rel={AFFILIATE_REL}
+                  >
+                    前往光速云官网 (码: {guangsuyunLink.couponCode}) <Icon name="arrow-up" size={12} />
+                  </a>
+                  <a class="btn btn--line btn--sm" href="/brands/guangsuyun/">
+                    查看实测图
+                  </a>
+                </div>
+              </div>
+
+              <div style="padding: 18px; border-radius: var(--radius-md); background: var(--color-mist); border: 1px solid var(--color-line);">
+                <span class="mini-tag mini-tag--ok">冷备搭档 · ETERNAL BACKUP（平时不用不扣流量、永不过期）</span>
+                <h4 style="font-size: 1.05rem; font-weight: 600; margin-top: 10px;">
+                  任选以下 1 家支持「按量不限时（永久流量包）」的独立上游机场作为 Fallback 备胎：
+                </h4>
+                <ul class="client-list" style="margin-top: 10px;">
+                  {backupBrands.map((b) => (
+                    <li style="justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--color-line); padding-bottom: 6px;">
+                      <span>
+                        <strong>#{b.rank} {b.name}</strong>：{b.unlimitedPlanSummary ?? b.pricingSummary}
+                      </span>
+                      <a class="link-arrow" href={`/brands/${b.slug}/`} style="font-size: var(--fs-xs);">
+                        详情 →
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="obs-card">
+            <div class="obs-card__head">
+              <div>
+                <span class="obs-card__eyebrow">MIHOMO / CLASH VERGE REV FAILOVER CONFIG</span>
+                <h3>一主一备 `fallback` 自动故障转移 YAML 模板</h3>
+              </div>
+              <button type="button" class="btn btn--dark btn--sm" id="copy-failover-btn">
+                复制容灾 YAML
+              </button>
+            </div>
+            <p style="font-size: var(--fs-xs); color: var(--color-stone); margin-bottom: 14px;">
+              工作原理：客户端每隔 180 秒自动检测主力光速云连通性；只要主力在线，100% 流量走光速云 IEPL；一旦遇到主线机房割接维护，0.5 秒内自动无感切换到备用永久包，恢复后自动切回主力。
+            </p>
+            <pre class="code-block" id="failover-yaml-code"><code>{dualStackFailoverYaml}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 / 跑路防范与维权止损 FAQ -->
+  <section class="section" id="runaway-faq" aria-labelledby="runaway-faq-title">
+    <div class="container">
+      <SectionHeading
+        id="runaway-faq-title"
+        title="05 / 防跑路、防失联域名与资金风控核心解答 (GEO FAQ)"
+        intro="更多客户端与协议排障问题，可随时访问我们的万字级「机场百科全书级 FAQ 中心 (/faq/)」。"
+      >
+        <Button href="/faq/" variant="line">前往机场 FAQ 百科全书</Button>
+      </SectionHeading>
+
+      <div class="faq-list" style="max-width: 100%;">
+        {runawayFaqs.map((item, index) => (
+          <details class="faq-item" open={index === 0}>
+            <summary>
+              <span>{item.question}</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-item__body" style="max-width: 90ch;">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+
+  <script is:inline>
+    (() => {
+      const tierBtns = document.querySelectorAll('[data-tier-filter]');
+      const searchInput = document.getElementById('radar-search-input');
+      const rows = document.querySelectorAll('.radar-row');
+      const countEl = document.getElementById('radar-filter-count');
+
+      let activeTier = 'all';
+
+      function filterRadar() {
+        const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        let visible = 0;
+        rows.forEach((row) => {
+          const tier = row.getAttribute('data-tier') || '';
+          const text = row.getAttribute('data-search') || '';
+          const matchTier = activeTier === 'all' || tier === activeTier;
+          const matchSearch = !q || text.includes(q);
+          if (matchTier && matchSearch) {
+            row.style.display = '';
+            visible++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+        if (countEl) {
+          countEl.innerHTML = `当前筛选展示 <strong>${visible}</strong> 家机场风控档案`;
+        }
+      }
+
+      tierBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          tierBtns.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          activeTier = btn.getAttribute('data-tier-filter') || 'all';
+          filterRadar();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterRadar);
+      }
+
+      const copyBtn = document.getElementById('copy-failover-btn');
+      const yamlEl = document.getElementById('failover-yaml-code');
+      if (copyBtn && yamlEl) {
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(yamlEl.innerText || '').then(() => {
+            const orig = copyBtn.textContent;
+            copyBtn.textContent = '已复制容灾配置 ✓';
+            setTimeout(() => {
+              copyBtn.textContent = orig;
+            }, 2000);
+          });
+        });
+      }
+    })();
+  </script>
+</PageLayout>

@@ -306,4 +306,26 @@
   .article__footer { flex-direction: column; align-items: flex-start }
 }
 
+/* =========================================================
+   Pillar Hub Code Blocks, Conversion Callouts & FAQ Matrix
+   ========================================================= */
+
+.code-block { margin-top: 10px; padding: 18px 20px; border-radius: var(--radius-md); background: #1C1B19; color: #F5F2EB; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: .78rem; line-height: 1.65; overflow-x: auto; white-space: pre }
+.conversion-callout { margin-top: 28px; padding: clamp(28px, 4vw, 44px); border-radius: var(--radius-lg); background: var(--color-mist); border: 1px solid var(--color-sand); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px }
+.conversion-callout h3 { margin-top: 10px; font-size: 1.4rem; font-weight: 500 }
+.conversion-callout p { margin-top: 8px; max-width: 68ch; font-size: var(--fs-small); color: var(--color-stone); line-height: 1.65 }
+.conversion-callout__actions { display: flex; flex-wrap: wrap; gap: 10px }
+
+.faq-list { display: grid; gap: 14px }
+.faq-item { border-radius: var(--radius-md); background: var(--color-white); border: 1px solid var(--color-line); padding: 0 24px; transition: border-color .2s }
+.faq-item[open] { border-color: var(--color-sand); box-shadow: 0 8px 24px rgba(28, 27, 25, .04) }
+.faq-item summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; font-size: 1.05rem }
+.faq-item summary::-webkit-details-marker { display: none }
+.faq-item__icon { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-line); position: relative; transition: transform .25s, background .25s, border-color .25s }
+.faq-item__icon::before, .faq-item__icon::after { content: ""; position: absolute; left: 50%; top: 50%; background: currentColor; transform: translate(-50%, -50%) }
+.faq-item__icon::before { width: 12px; height: 1.5px }
+.faq-item__icon::after { width: 1.5px; height: 12px }
+.faq-item[open] .faq-item__icon { transform: rotate(45deg); background: var(--color-ink); color: var(--color-white); border-color: var(--color-ink) }
+.faq-item__body { padding: 4px 0 24px; border-top: 1px solid var(--color-line); font-size: var(--fs-small); color: var(--color-stone); line-height: 1.75 }
+
 .section--mist .topics .tag, .section--mist .post .tag { background: var(--color-white) }

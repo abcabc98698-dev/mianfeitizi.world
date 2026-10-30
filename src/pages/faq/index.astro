@@ -1,0 +1,381 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { getBrandBySlug } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL, AFFILIATE_DISCLOSURE } from '../../data/links';
+import { faqCategories, emergencyFixCards, faqEntries } from '../../data/faq-matrix';
+import { breadcrumbSchema, faqPageSchema } from '../../utils/schema';
+
+const guangsuyun = getBrandBySlug('guangsuyun')!;
+const guangsuyunLink = getBrandLink('guangsuyun');
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '机场 FAQ 百科全书', href: '/faq/' },
+];
+
+const schemaFaqItems = faqEntries.map((item) => ({
+  question: item.question,
+  answer: `${item.shortAnswer} ${item.detailParagraphs.join(' ')}`,
+}));
+---
+
+<PageLayout
+  seo={{
+    title: '2026 机场 FAQ 百科全书：专线原理、报错急救、ChatGPT 防封与流媒体解锁全解',
+    description:
+      '万字级科学上网与机场 FAQ 专题知识库：深度解答新手选型避坑、IEPL/IPLC 专线区别、VLESS/Hysteria2 协议、YAML 报错与断网急救、ChatGPT 降智与 Claude 防封号、Netflix 4K 解锁及软路由共享配置。',
+    image: '/media/banners/journal-editorial-stones-hero.webp',
+    imageAlt: '2026 机场百科全书级 FAQ 与排障知识库',
+    schema: [breadcrumbSchema(crumbs, Astro.site), faqPageSchema(schemaFaqItems)],
+  }}
+  hero={{
+    image: { src: '/media/banners/journal-editorial-stones-hero.webp', alt: '' },
+    eyebrow: 'ENCYCLOPEDIA FAQ HUB · 8 大技术域 · 36+ 万字级深度问答',
+    title: '机场百科全书与报错急救中心',
+    words: [{ text: '机场百科全书' }, { text: '报错急救中心', serif: true }],
+    lead: '为什么节点测速全绿却打不开网页？为什么关掉代理后国内百度/B站全部断网？为什么 ChatGPT 会提示 Access Denied 或遭遇隐形降智？我们把过去 6 年高频出现的选型疑惑、网络底层原理与客户端排障方案浓缩为这份可实时检索的百科全书。',
+    breadcrumbs: crumbs,
+  }}
+>
+  <Fragment slot="hero">
+    <div class="page-hero__actions">
+      <Button href="#emergency" variant="light">01 报错 30 秒急救室</Button>
+      <Button href="#faq-hub" variant="glass">02 检索 8 大分类问答库</Button>
+      <Button href="/brands/guangsuyun/" variant="glass">03 直达 TOP 1 光速云评测</Button>
+      <Button href="/runaway-watch/" variant="glass">04 跑路预警与防失联雷达</Button>
+    </div>
+  </Fragment>
+
+  <!-- 01 / 报错 30 秒急救室 -->
+  <section class="section" id="emergency" aria-labelledby="emergency-title">
+    <div class="container">
+      <div class="compliance-banner" role="note">
+        <p>{AFFILIATE_DISCLOSURE}</p>
+      </div>
+
+      <SectionHeading
+        id="emergency-title"
+        title="01 / 遇到断网或导入报错？先对照这 4 张 30 秒高频急救卡"
+        intro="统计显示，超过 85% 的「梯子连不上」并非机场服务器故障，而是系统代理残留、订阅格式不匹配或使用了停更的旧版客户端内核。"
+      >
+        <Button href="/clients/" variant="line">下载最新版开源客户端</Button>
+      </SectionHeading>
+
+      <div class="client-cards-grid">
+        {emergencyFixCards.map((card) => (
+          <article class="client-card client-card--recommended">
+            <div class="client-card__head">
+              <div>
+                <span class="rank-chip">{card.code}</span>
+                <h3>{card.symptom}</h3>
+              </div>
+              <span class="mini-status mini-status--measured">30秒快修</span>
+            </div>
+            <div class="client-warning">
+              <strong>底层病因：</strong> {card.rootCause}
+            </div>
+            <div>
+              <h4 style="font-size: var(--fs-xs); font-weight: 600; color: var(--color-muted); margin-bottom: 10px;">
+                立即执行以下修复步骤：
+              </h4>
+              <ol class="client-steps">
+                {card.quickFixSteps.map((step) => (
+                  <li>{step}</li>
+                ))}
+              </ol>
+            </div>
+            <div class="brand-dir-card__actions" style="margin-top: auto;">
+              <a class="btn btn--line btn--sm" href={`#${card.targetFaqId}`}>
+                查看完整原理解析
+              </a>
+              <a class="btn btn--dark btn--sm" href="/clients/">
+                升级最新版客户端
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 / 8 大专题 · 百科全书级交互式问答矩阵 -->
+  <section class="section section--mist" id="faq-hub" aria-labelledby="faq-hub-title">
+    <div class="container">
+      <SectionHeading
+        id="faq-hub-title"
+        title="02 / 8 大专题 · 交互式百科全书问答矩阵"
+        intro="涵盖选型预算、IEPL 专线原理、VLESS/Hysteria2 协议、报错修复、ChatGPT/Claude 防封、Netflix 4K 解锁、软路由共享及 HTTPS 隐私安全。点击分类卡片或输入关键词即可一秒过滤。"
+      />
+
+      <!-- 分类卡片概览 -->
+      <div class="platform-jump-grid" style="margin-bottom: 28px;">
+        {faqCategories.map((cat) => {
+          const count = faqEntries.filter((e) => e.category === cat.id).length;
+          return (
+            <button
+              type="button"
+              class="platform-jump-card faq-cat-card"
+              data-faq-cat-trigger={cat.id}
+              style="text-align: left; cursor: pointer;"
+            >
+              <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span class="eyebrow">{cat.code} / {cat.shortLabel}</span>
+                <span class="mini-tag mini-tag--ok">{count} 篇详解</span>
+              </div>
+              <h3>{cat.label}</h3>
+              <p>{cat.description}</p>
+            </button>
+          );
+        })}
+      </div>
+
+      <!-- 搜索与筛选工具栏 -->
+      <div class="filter-bar">
+        <div class="filter-tabs" role="tablist" aria-label="FAQ 分类筛选">
+          <button class="filter-btn is-active" type="button" data-faq-filter="all">
+            全部问答 ({faqEntries.length})
+          </button>
+          {faqCategories.map((cat) => (
+            <button class="filter-btn" type="button" data-faq-filter={cat.id}>
+              {cat.code} · {cat.shortLabel}
+            </button>
+          ))}
+        </div>
+        <div class="filter-search" style="display: flex; gap: 8px; align-items: center;">
+          <input
+            type="search"
+            id="faq-search-input"
+            placeholder="搜索问题，如：VLESS、ChatGPT降智、YAML、微信、奈飞..."
+            aria-label="搜索 FAQ 问答"
+          />
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px;">
+        <p class="filter-count" id="faq-filter-count" style="margin-bottom: 0;">
+          当前展示全部 <strong>{faqEntries.length}</strong> 条深度技术问答
+        </p>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn--line btn--sm" id="faq-expand-all">
+            全部展开阅读
+          </button>
+          <button type="button" class="btn btn--line btn--sm" id="faq-collapse-all">
+            全部折叠收起
+          </button>
+        </div>
+      </div>
+
+      <!-- FAQ 列表 -->
+      <div class="faq-list" id="faq-matrix-list" style="max-width: 100%;">
+        {faqEntries.map((item, idx) => {
+          const catMeta = faqCategories.find((c) => c.id === item.category)!;
+          return (
+            <details
+              class="faq-item faq-matrix-item"
+              id={item.id}
+              open={idx < 4}
+              data-category={item.category}
+              data-search={`${item.question} ${item.shortAnswer} ${item.detailParagraphs.join(' ')} ${item.keywords.join(' ')}`.toLowerCase()}
+            >
+              <summary>
+                <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-right: 14px;">
+                  <span class="mini-status mini-status--vendor">{catMeta.code} · {catMeta.shortLabel}</span>
+                  <strong>{item.question}</strong>
+                </span>
+                <span class="faq-item__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-item__body" style="max-width: 92ch;">
+                <div style="padding: 14px 18px; border-radius: var(--radius-md); background: var(--color-white); border-left: 3px solid var(--color-ink); margin-bottom: 14px;">
+                  <strong style="color: var(--color-ink);">核心结论（GEO 速答）：</strong>
+                  <span>{item.shortAnswer}</span>
+                </div>
+
+                {item.detailParagraphs.map((p) => (
+                  <p style="margin-top: 10px; line-height: 1.75;">{p}</p>
+                ))}
+
+                {item.codeSnippet && (
+                  <pre class="code-block" style="margin-top: 14px;"><code>{item.codeSnippet}</code></pre>
+                )}
+
+                {item.actionTip && (
+                  <p style="margin-top: 12px; padding: 10px 14px; border-radius: var(--radius-sm); background: #E7F3EC; color: #1E5A38; font-size: var(--fs-xs);">
+                    <strong>实操锦囊：</strong> {item.actionTip}
+                  </p>
+                )}
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--color-line);">
+                  <div class="feature-tags">
+                    {item.keywords.map((kw) => (
+                      <span class="mini-tag">#{kw}</span>
+                    ))}
+                  </div>
+                  {item.relatedLinks && item.relatedLinks.length > 0 && (
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                      {item.relatedLinks.map((link) => (
+                        <a class="link-arrow" href={link.href} style="font-size: var(--fs-xs);">
+                          {link.label} →
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </details>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 / 省心一步到位推荐与专题矩阵互联 -->
+  <section class="section" aria-labelledby="faq-cta-title">
+    <div class="container">
+      <div class="conversion-callout">
+        <div class="brand-spec-grid" style="align-items: center;">
+          <div>
+            <span class="eyebrow">03 / 告别繁琐排障的一步到位方案 (ZERO-HASSLE SOLUTION)</span>
+            <h2 class="brand-spec-title" id="faq-cta-title">
+              不想再为晚高峰断流、AI 封号与流媒体解锁折腾配置？
+            </h2>
+            <p class="brand-spec-lead">
+              很多时候你在客户端里反复修改规则，根源其实是手里那家廉价直连机场的底层线路与落地 IP 质量太差。换用 2020 年起稳定运营 6 年的 <strong>#1 {guangsuyun.name}</strong>：全线 IEPL 物理内网专线 + VLESS 协议，服务端原生内置 ChatGPT / Claude / Netflix 4K / Disney+ 全节点分流解锁，导入即用零折腾。
+            </p>
+            <div class="feature-tags" style="margin-top: 18px;">
+              <span class="mini-tag mini-tag--ok">2020老牌6年零跑路</span>
+              <span class="mini-tag mini-tag--ok">轻量年付 99元/年 (~8.2元/月)</span>
+              <span class="mini-tag mini-tag--ok">永久流量包 147元/247GB</span>
+              <span class="mini-tag mini-tag--ok">专属 9 折优惠码：{guangsuyunLink.couponCode}</span>
+            </div>
+            <div class="page-hero__actions" style="margin-top: 24px;">
+              <a
+                class="btn btn--dark"
+                href={guangsuyunLink.registerUrl}
+                target="_blank"
+                rel={AFFILIATE_REL}
+              >
+                前往 TOP 1 光速云官网 (码: {guangsuyunLink.couponCode}) <Icon name="arrow-up" size={14} />
+              </a>
+              <a class="btn btn--line" href="/brands/guangsuyun/">查看光速云实测报告</a>
+              <a class="btn btn--line" href="/free-nodes/">免费资源与工具箱</a>
+              <a class="btn btn--line" href="/runaway-watch/">跑路预警与风控雷达</a>
+            </div>
+          </div>
+
+          <aside class="brand-cta-box" style="position: static;">
+            <span class="brand-cta-box__badge">专题矩阵快速导航</span>
+            <h3>三大万字级核心专题</h3>
+            <p class="brand-cta-box__sub">覆盖从免费工具、排障百科到防跑路风控的完整闭环</p>
+            <ul class="brand-cta-box__checks">
+              <li>
+                <a href="/free-nodes/" style="text-decoration: underline; font-weight: 600;">
+                  01 · 免费梯子与全球出海工具箱 (/free-nodes/)
+                </a>
+              </li>
+              <li>
+                <a href="/faq/" style="text-decoration: underline; font-weight: 600;">
+                  02 · 机场百科全书级 FAQ 排障中心 (/faq/)
+                </a>
+              </li>
+              <li>
+                <a href="/runaway-watch/" style="text-decoration: underline; font-weight: 600;">
+                  03 · 机场跑路预警与 42 家风控雷达 (/runaway-watch/)
+                </a>
+              </li>
+              <li>
+                <a href="/clients/" style="text-decoration: underline; font-weight: 600;">
+                  04 · 全平台开源代理客户端下载库 (/clients/)
+                </a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+
+  <script is:inline>
+    (() => {
+      const filterBtns = document.querySelectorAll('[data-faq-filter]');
+      const catCards = document.querySelectorAll('[data-faq-cat-trigger]');
+      const searchInput = document.getElementById('faq-search-input');
+      const items = document.querySelectorAll('.faq-matrix-item');
+      const countEl = document.getElementById('faq-filter-count');
+      const expandAllBtn = document.getElementById('faq-expand-all');
+      const collapseAllBtn = document.getElementById('faq-collapse-all');
+
+      let activeCat = 'all';
+
+      function applyFilter() {
+        const q = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        let visible = 0;
+        items.forEach((el) => {
+          const cat = el.getAttribute('data-category') || '';
+          const text = el.getAttribute('data-search') || '';
+          const matchCat = activeCat === 'all' || cat === activeCat;
+          const matchSearch = !q || text.includes(q);
+          if (matchCat && matchSearch) {
+            el.style.display = '';
+            if (q) el.setAttribute('open', '');
+            visible++;
+          } else {
+            el.style.display = 'none';
+          }
+        });
+        if (countEl) {
+          countEl.innerHTML = `当前筛选展示 <strong>${visible}</strong> 条深度技术问答`;
+        }
+      }
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          activeCat = btn.getAttribute('data-faq-filter') || 'all';
+          applyFilter();
+        });
+      });
+
+      catCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          const targetCat = card.getAttribute('data-faq-cat-trigger') || 'all';
+          activeCat = targetCat;
+          filterBtns.forEach((b) => {
+            if (b.getAttribute('data-faq-filter') === targetCat) {
+              b.classList.add('is-active');
+            } else {
+              b.classList.remove('is-active');
+            }
+          });
+          applyFilter();
+          const listEl = document.getElementById('faq-matrix-list');
+          if (listEl) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilter);
+      }
+
+      if (expandAllBtn) {
+        expandAllBtn.addEventListener('click', () => {
+          items.forEach((el) => {
+            if (el.style.display !== 'none') el.setAttribute('open', '');
+          });
+        });
+      }
+
+      if (collapseAllBtn) {
+        collapseAllBtn.addEventListener('click', () => {
+          items.forEach((el) => el.removeAttribute('open'));
+        });
+      }
+    })();
+  </script>
+</PageLayout>
