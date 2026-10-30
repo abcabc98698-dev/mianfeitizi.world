@@ -3,15 +3,16 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Mindful movement, breathwork and restorative yoga studio web application.",
+  "description": "2026 免费梯子避坑指南、42家专线机场实测与全平台代理客户端导航",
   "license": "MIT",
   "keywords": [
-    "yoga",
-    "wellness",
-    "breathwork",
-    "mindfulness",
-    "mobility",
-    "studio"
+    "科学上网",
+    "免费梯子",
+    "机场推荐",
+    "IEPL专线",
+    "Clash教程",
+    "代理客户端",
+    "节点测速"
   ],
   "engines": {
     "node": ">=22.12.0"

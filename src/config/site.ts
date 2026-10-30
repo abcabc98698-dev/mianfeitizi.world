@@ -59,5 +59,12 @@ export const site: SiteConfig = {
     themeColor: '#F5F4F1',
   },
 
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || '',
+    bing: process.env.BING_SITE_VERIFICATION || '',
+    baidu: process.env.BAIDU_SITE_VERIFICATION || '',
+    shenma: process.env.SHENMA_SITE_VERIFICATION || '',
+  },
+
   copyright: 'mianfeitizi.world (免费梯子评测实验室). 保留所有权利。站内含推广链接，不影响用户购买价格。',
 };

@@ -1,0 +1,263 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { getTop10Brands } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL } from '../../data/links';
+import { breadcrumbSchema, itemListSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+import { getPosts } from '../../utils/posts';
+
+const guangsuyunLink = getBrandLink('guangsuyun');
+const top10 = getTop10Brands().slice(0, 4);
+
+const allPosts = await getPosts();
+const relatedPosts = allPosts.filter(p => 
+  p.id.includes('runaway') || p.id.includes('vpn') || p.id.includes('top-10')
+).slice(0, 3);
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '稳定梯子推荐', href: '/tizi/' },
+];
+
+const categorySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '2026稳定科学上网梯子推荐与避坑防跑路雷达',
+  description: '揭秘梯子市场常见的假专线超卖、超低价圈钱跑路陷阱，提供0跑路失联记录的老牌稳定专线梯子选型与容灾方案。',
+  url: 'https://mianfeitizi.world/tizi/',
+};
+---
+
+<PageLayout
+  seo={{
+    title: '2026 稳定科学上网梯子推荐与避坑防跑路雷达 | 平价专线指南',
+    description:
+      '科学上网梯子怎么选？深度曝光 2026 梯子市场常见的“假专线、大促销卷款跑路、虚假不限流量”三大陷阱。推荐成立 3 年以上稳定无跑路记录的优质专线品牌。首推 TOP 1 光速云（99元/年，折合8元/月，9折码 AMM）。',
+    image: '/media/journal/free-vpn-risk-budget-iepl-cover.webp',
+    imageAlt: '2026稳定梯子推荐与避坑防跑路指南',
+    schema: [
+      categorySchema,
+      breadcrumbSchema(crumbs, Astro.site),
+      itemListSchema(
+        '2026稳定防跑路专线梯子精选推荐',
+        '高稳定性、抗封锁且具备原生IP落地的科学上网方案',
+        top10.map((b, idx) => ({
+          name: `${idx + 1}. ${b.name}`,
+          url: `/brands/${b.slug}/`,
+          description: b.tagline,
+          position: idx + 1,
+        })),
+        Astro.site,
+      ),
+    ],
+  }}
+>
+  <div class="page-hero-wrap">
+    <header class="page-hero">
+      <img
+        class="page-hero__bg"
+        src={url('/media/journal/free-vpn-risk-budget-iepl-cover.webp')}
+        alt="稳定梯子推荐与避坑指南背景图"
+        width="2000"
+        height="1125"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="container page-hero__inner">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            {crumbs.map((c, i) => (
+              <li>
+                {i < crumbs.length - 1 ? <a href={url(c.href)}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <p class="page-hero__eyebrow">Anti-Runaway & Reliable Ladder / 梯子避坑</p>
+        <h1 class="page-hero__title page-hero__title--plain">2026 稳定科学上网梯子推荐与避坑指南</h1>
+        <p class="page-hero__lead">
+          买梯子最怕什么？刚付完一年年费，不到一个月服务商就删库跑路失联！本栏目基于风控大数据模型，揭秘梯子黑产套路，发布跑路预警雷达，教您如何用最低预算搭建“主副双栈容灾备份”，实现 365 天无感永不失联。
+        </p>
+        <div class="page-hero__actions">
+          <a class="btn btn--dark" href="/runaway-watch/">查看跑路预警雷达</a>
+          <a class="btn btn--line" href="/brands/guangsuyun/">查看 0 跑路旗舰：光速云</a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- 子栏目导航矩阵 -->
+  <section class="section section--sand">
+    <div class="container">
+      <div class="subnav-grid">
+        <a class="subnav-card" href="/runaway-watch/">
+          <span class="subnav-card__tag">Radar</span>
+          <h3>跑路预警雷达</h3>
+          <p>42家机场安全等级评定、跑路前兆识别与电报群异常舆情监测。</p>
+          <span class="link-arrow">进入预警雷达 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/free/">
+          <span class="subnav-card__tag">Free</span>
+          <h3>免费梯子真相</h3>
+          <p>剖析免费 VPN 倒卖个人隐私机制，汇总正规白嫖体验与试用通道。</p>
+          <span class="link-arrow">查阅免费专题 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/jichang/">
+          <span class="subnav-card__tag">Pillar</span>
+          <h3>平价专线推荐</h3>
+          <p>月均 8 元以内的稳定 IEPL 包年与永久不限时套餐全面横评。</p>
+          <span class="link-arrow">查看精选专线 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/faq/">
+          <span class="subnav-card__tag">Emergency</span>
+          <h3>失联急救手册</h3>
+          <p>节点全挂、官网打不开时的 30 秒紧急自救排查与应急备用方案。</p>
+          <span class="link-arrow">查看急救指南 <Icon name="arrow-right" size={14} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目说明与技术剖析 -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        title="栏目说明：科学上网梯子防跑路核心「三大防坑铁律」"
+        intro="每年都有数以百计的小作坊梯子卷款跑路。记住这三条铁律，守护资金安全与跨境业务连续性。"
+      />
+
+      <div class="prose" style="max-width: 100%;">
+        <div class="faq-card" style="margin-bottom: 24px; padding: 24px; background: var(--color-mist); border-radius: 8px;">
+          <h3 style="margin-top: 0;">一、绝不在成立不足一年的新梯子购买「超长年付」或「永久会员」</h3>
+          <p>
+            许多跑路梯子的套路如出一辙：开业前两三个月租用廉价公网中转服务器，以极低的价格（如 30 元/年）疯狂在各论坛打广告，甚至推出“99 元终身无限流量”。一旦吸收了数千名用户的资金，面对后续昂贵的专线续约账单，运营者便直接关闭官网、清空 Telegram 频道卷款消失。
+          </p>
+          <p>
+            <strong>防御法则</strong>：新接触的平台务必先月付或季付体验；只有成立 3 年以上、拥有成熟社区口碑的品牌，才可考虑年付以节省成本。
+          </p>
+        </div>
+
+        <div class="faq-card" style="margin-bottom: 24px; padding: 24px; background: var(--color-mist); border-radius: 8px;">
+          <h3 style="margin-top: 0;">二、坚决实施「主力专线 + 不限时备用包」双栈容灾</h3>
+          <p>
+            没有任何单一梯子敢 100% 承诺永不出现海底光缆被挖断或上游机房检修的情况。聪明的出海工程师与跨境人员都会采用“双保险架构”：
+          </p>
+          <ul>
+            <li><strong>主力梯子</strong>：选择 <strong>TOP 1 光速云</strong>（99元/年，月均 8 元），负责日常全速刷 4K、下载与 AI 生产力；</li>
+            <li><strong>应急备用包</strong>：购买一份按量计费、永久不过期且不限时间的流量包（如光速云 147元/247GB 永久包，或萤火虫、二猫云的不限时包）。备用包平时不扣月租，一旦主力网络检修，一秒切换，绝无后顾之忧。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 核心转化展台：TOP 1 光速云 -->
+      <div class="conversion-callout" style="margin-top: 32px;">
+        <div class="conversion-callout__badge">6 年零跑路信用标杆</div>
+        <h3 class="conversion-callout__title">TOP 1 光速云（GuangSuYun）—— 稳定运营 6 年，百元内年付标杆梯子</h3>
+        <p class="conversion-callout__desc">
+          光速云自 2020 年创立以来持续稳定运营，保持 **0 跑路、0 失联、0 重大断线** 记录。采用广深 BGP 入口与企业级物理 IEPL 专线，抗封锁 VLESS 协议。轻量版套餐 <strong>99元/年（折合每月仅 8 元）</strong>，结账输入 9 折码 <strong>AMM</strong>，彻底杜绝小作坊圈钱风险。
+        </p>
+        <div class="conversion-callout__actions">
+          <a class="btn btn--dark" href={guangsuyunLink.registerUrl} target="_blank" rel={AFFILIATE_REL}>
+            注册老牌零跑路梯子（9折码 AMM）<Icon name="arrow-up" size={14} />
+          </a>
+          <a class="btn btn--line" href="/brands/guangsuyun/">查看光速云安全评估档案</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 稳定梯子品牌推荐 -->
+  <section class="section section--mist">
+    <div class="container">
+      <SectionHeading
+        title="稳定防跑路梯子精选推荐"
+        intro="经本实验室风控模型审计，运营年限均在 2 年以上、具备稳定技术支持与内网专线储备的品牌。"
+      >
+        <Button href="/brands/">查看全部 42 家机场评测库</Button>
+      </SectionHeading>
+
+      <div class="brand-cards-grid">
+        {top10.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          return (
+            <article class="brand-dir-card brand-dir-card--featured">
+              <div class="brand-dir-card__top">
+                <div class="brand-dir-card__badges">
+                  <span class="rank-chip">#{brand.rank}</span>
+                  <span class="tag">{brand.badge}</span>
+                </div>
+                {brand.speedtestEvidence && <span class="mini-status mini-status--measured">含实测图</span>}
+              </div>
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{brand.tagline}</p>
+              <dl class="brand-dir-card__specs">
+                <div>
+                  <dt>成立年限</dt>
+                  <dd>{brand.foundedYear} (老牌稳定运营)</dd>
+                </div>
+                <div>
+                  <dt>代表价格</dt>
+                  <dd>{brand.pricingSummary}</dd>
+                </div>
+                <div>
+                  <dt>专属折扣码</dt>
+                  <dd><strong class="coupon-highlight">{link.couponCode} ({link.couponDiscount})</strong></dd>
+                </div>
+              </dl>
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={link.registerUrl} target="_blank" rel={AFFILIATE_REL}>
+                  前往官网安全开通 <Icon name="arrow-up" size={14} />
+                </a>
+                <a class="btn btn--line" href={url(`/brands/${brand.slug}/`)}>查看评测</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目相关文章 -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        title="梯子避坑与风控安全深度专栏"
+        intro="学习辨识虚假专线、分析服务器成本与配置容灾备份模板的实用干货。"
+      />
+      <div class="journal">
+        {relatedPosts.map((post) => (
+          <article class="post">
+            <a class="post__media" href={url(`/journal/${post.id}/`)}>
+              <img
+                src={url(post.data.image)}
+                alt={post.data.imageAlt}
+                width="640"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="post__body">
+              <p class="post__meta">
+                <span class="tag">{post.data.category}</span>
+                <span>约 {post.data.readingTime ?? 8} 分钟阅读</span>
+              </p>
+              <h3 class="post__title">
+                <a href={url(`/journal/${post.id}/`)}>{post.data.title}</a>
+              </h3>
+              <p class="post__excerpt">{post.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>

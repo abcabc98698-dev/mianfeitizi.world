@@ -1,0 +1,263 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { getTop10Brands } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL } from '../../data/links';
+import { breadcrumbSchema, itemListSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+import { getPosts } from '../../utils/posts';
+
+const guangsuyunLink = getBrandLink('guangsuyun');
+const top10 = getTop10Brands().slice(0, 6);
+const allPosts = await getPosts();
+const relatedPosts = allPosts.filter(p => 
+  p.id.includes('protocol') || p.id.includes('vpn') || p.id.includes('top-10')
+).slice(0, 3);
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: 'VPN与科学上网指南', href: '/vpn/' },
+];
+
+const categorySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'VPN推荐与科学上网全景指南 - 2026海外VPN与IEPL专线深度评测',
+  description: '全面对比传统国外商业VPN与现代IEPL/IPLC企业内网专线机场的架构差异、抗封锁能力与性价比，提供2026年稳定出海最佳方案。',
+  url: 'https://mianfeitizi.world/vpn/',
+};
+---
+
+<PageLayout
+  seo={{
+    title: '2026 VPN推荐与科学上网避坑指南 | 传统VPN与IEPL专线深度对比',
+    description:
+      '全面剖析传统海外商业VPN在中国的连通困局，详解 2026 年基于 IEPL 专线与 VLESS 协议的新型网络代理选型。首推 TOP 1 光速云（99元/年，折合8元/月，9折码 AMM）。',
+    image: '/media/journal/iepl-vs-iplc-protocol-guide-cover.webp',
+    imageAlt: 'VPN与科学上网全景指南',
+    schema: [
+      categorySchema,
+      breadcrumbSchema(crumbs, Astro.site),
+      itemListSchema(
+        '2026精选VPN平替与优质专线推荐',
+        '高稳定性、抗封锁且具备原生IP落地的科学上网方案',
+        top10.map((b, idx) => ({
+          name: `${idx + 1}. ${b.name}`,
+          url: `/brands/${b.slug}/`,
+          description: b.tagline,
+          position: idx + 1,
+        })),
+        Astro.site,
+      ),
+    ],
+  }}
+>
+  <div class="page-hero-wrap">
+    <header class="page-hero">
+      <img
+        class="page-hero__bg"
+        src={url('/media/journal/iepl-vs-iplc-protocol-guide-cover.webp')}
+        alt="VPN与科学上网全景指南背景图"
+        width="2000"
+        height="1125"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="container page-hero__inner">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            {crumbs.map((c, i) => (
+              <li>
+                {i < crumbs.length - 1 ? <a href={url(c.href)}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <p class="page-hero__eyebrow">VPN & Proxy Architecture / 专线评测</p>
+        <h1 class="page-hero__title page-hero__title--plain">VPN推荐与科学上网全景指南</h1>
+        <p class="page-hero__lead">
+          为什么在 2026 年，传统海外商业 VPN（如 ExpressVPN、NordVPN）在大陆网络环境下频繁断流断连？本栏目为您深度拆解 GFW 深度包检测（DPI）机制，科普企业级 IEPL 内网专线相比传统 VPN 的代际碾压优势，助您避开高价年付陷阱。
+        </p>
+        <div class="page-hero__actions">
+          <a class="btn btn--dark" href="#vpn-vs-iepl">传统 VPN vs 专线对比</a>
+          <a class="btn btn--line" href="/brands/guangsuyun/">查看首选：光速云评测</a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- 子栏目导航矩阵 -->
+  <section class="section section--sand">
+    <div class="container">
+      <div class="subnav-grid">
+        <a class="subnav-card" href="/jichang/">
+          <span class="subnav-card__tag">Pillar</span>
+          <h3>机场推荐库</h3>
+          <p>42家专线机场真实测速图证、百元内年付方案与不限时按量流量包。</p>
+          <span class="link-arrow">浏览专线推荐 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/clash/">
+          <span class="subnav-card__tag">Client</span>
+          <h3>Clash 教程与配置</h3>
+          <p>Clash Verge Rev、FlClash、v2rayN 订阅导入与分流规则最佳实践。</p>
+          <span class="link-arrow">查看客户端配置 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/nodes/">
+          <span class="subnav-card__tag">Speed</span>
+          <h3>节点测速与选型</h3>
+          <p>香港、日本、美国、新加坡原生落地 IP 测速、流媒体解锁及延迟比对。</p>
+          <span class="link-arrow">查看节点测速 <Icon name="arrow-right" size={14} /></span>
+        </a>
+        <a class="subnav-card" href="/free/">
+          <span class="subnav-card__tag">Free</span>
+          <h3>免费资源与试用</h3>
+          <p>6 家支持新用户免费试用的正规专线及 Cloudflare WARP/Workers 白嫖全案。</p>
+          <span class="link-arrow">查看免费资源 <Icon name="arrow-right" size={14} /></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目说明与深度技术科普 -->
+  <section class="section" id="vpn-vs-iepl">
+    <div class="container">
+      <SectionHeading
+        title="栏目说明：为什么 2026 年科学上网首选「IEPL 专线」而非传统海外 VPN？"
+        intro="许多刚接触科学上网的朋友经常被海外营销博客误导，盲目购买每年数百美元的国外大厂 VPN，结果在国内连接屡屡受挫。"
+      />
+
+      <div class="prose" style="max-width: 100%;">
+        <div class="faq-card" style="margin-bottom: 24px; padding: 24px; background: var(--color-mist); border-radius: 8px;">
+          <h3 style="margin-top: 0;">一、传统国外商业 VPN 在大陆水土不服的核心病根</h3>
+          <p>
+            国外主流商业 VPN（如 ExpressVPN、NordVPN、Surfshark）最初设计目标是在欧美开放网络环境下保护公共 Wi-Fi 的通信隐私，采用的标准协议包括 OpenVPN (UDP/TCP)、IKEv2 和 WireGuard。这类协议的握手包特征极度明显，防火长城（GFW）的神经网络深度包检测（DPI）系统能在几毫秒内识别并阻断其 TLS 证书特征或重置 TCP 连接，导致用户遭遇“连不上、易掉线、晚高峰断流”的死局。
+          </p>
+          <p>
+            此外，传统 VPN 的服务器入口均架设在海外公网，国内三网（电信、联通、移动）的数据包必须经历拥堵不堪的国际公网出口（163骨干网），晚高峰丢包率常年高达 30%～60%，几乎无法流畅观看 4K 视频或稳定与 ChatGPT、Claude 进行低延迟交互。
+          </p>
+        </div>
+
+        <div class="faq-card" style="margin-bottom: 24px; padding: 24px; background: var(--color-mist); border-radius: 8px;">
+          <h3 style="margin-top: 0;">二、现代 IEPL 企业级内网专线的代际破局优势</h3>
+          <p>
+            为了根治公网抖动与协议被特征识别的难题，现代专线机场采用了**「国内高速入口 + 内网物理专线 + 海外原生落地」**的端到端架构：
+          </p>
+          <ul>
+            <li><strong>根本不过公网 GFW 审查</strong>：用户连接的是机场在国内部署的优质 BGP 节点（如广深、上海或江苏入口），国内数据通过运营商物理海底光缆（IEPL/IPLC 内网）直达香港、东京或新加坡，数据传输全程走运营商内网，完全避开公网防火墙干扰。</li>
+            <li><strong>无感超低延迟与全天零丢包</strong>：以广深至香港 IEPL 专线为例，端到端物理延迟仅 3～6ms，晚高峰丢包率趋近于 0%，彻底终结 4K 卡顿与网课/会议断音。</li>
+            <li><strong>现代轻量抗封锁协议</strong>：主流专线搭配 VLESS-Reality、Trojan 或 Shadowsocks 协议，手机端功耗仅为传统 OpenVPN 的三分之一，握手速度快至 20ms。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 核心转化展台：TOP 1 光速云 -->
+      <div class="conversion-callout" style="margin-top: 32px;">
+        <div class="conversion-callout__badge">2026 年度编辑精选首位推荐</div>
+        <h3 class="conversion-callout__title">TOP 1 光速云（GuangSuYun）—— 稳定替代传统高价 VPN 的平价旗舰</h3>
+        <p class="conversion-callout__desc">
+          2020 年创立的 6 年老牌专线旗舰，广深 BGP 入口搭配企业级物理 IEPL 专线，抗封锁 VLESS 协议。轻量版套餐仅需 <strong>99元/年（折合每月仅 8 元，每天不到 3 毛钱）</strong>，另有 <strong>147元/247GB 永久不过期流量包</strong>，结账输入 9 折优惠码 <strong>AMM</strong>，彻底告别海外 VPN 昂贵的月费与频繁掉线焦虑。
+        </p>
+        <div class="conversion-callout__actions">
+          <a class="btn btn--dark" href={guangsuyunLink.registerUrl} target="_blank" rel={AFFILIATE_REL}>
+            前往光速云官网注册（9折码 AMM）<Icon name="arrow-up" size={14} />
+          </a>
+          <a class="btn btn--line" href="/brands/guangsuyun/">查看光速云完整实测评测</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 精选专线机场推荐列表 -->
+  <section class="section section--mist">
+    <div class="container">
+      <SectionHeading
+        title="精选专线机场：告别传统 VPN，拥抱现代高速出海体验"
+        intro="以下品牌均采用 BGP 入口与专线传输架构，经实验室在 2026 晚高峰实测，具备极高的可用性与性价比。"
+      >
+        <Button href="/brands/">查看全部 42 家机场评测库</Button>
+      </SectionHeading>
+
+      <div class="brand-cards-grid">
+        {top10.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          return (
+            <article class="brand-dir-card brand-dir-card--featured">
+              <div class="brand-dir-card__top">
+                <div class="brand-dir-card__badges">
+                  <span class="rank-chip">#{brand.rank}</span>
+                  <span class="tag">{brand.badge}</span>
+                </div>
+                {brand.speedtestEvidence && <span class="mini-status mini-status--measured">含实测图</span>}
+              </div>
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{brand.tagline}</p>
+              <dl class="brand-dir-card__specs">
+                <div>
+                  <dt>线路类型</dt>
+                  <dd>{brand.lineType} ({brand.protocols.join('/')})</dd>
+                </div>
+                <div>
+                  <dt>代表价格</dt>
+                  <dd>{brand.pricingSummary}</dd>
+                </div>
+                <div>
+                  <dt>专属优惠码</dt>
+                  <dd><strong class="coupon-highlight">{link.couponCode} ({link.couponDiscount})</strong></dd>
+                </div>
+              </dl>
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={link.registerUrl} target="_blank" rel={AFFILIATE_REL}>
+                  前往官网注册 <Icon name="arrow-up" size={14} />
+                </a>
+                <a class="btn btn--line" href={url(`/brands/${brand.slug}/`)}>查看评测</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目相关文章 -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        title="VPN 与底层协议相关深度阅读"
+        intro="实验室工程师撰写的技术长文，涵盖协议演进、解锁原理与客户端调试指南。"
+      />
+      <div class="journal">
+        {relatedPosts.map((post) => (
+          <article class="post">
+            <a class="post__media" href={url(`/journal/${post.id}/`)}>
+              <img
+                src={url(post.data.image)}
+                alt={post.data.imageAlt}
+                width="640"
+                height="400"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="post__body">
+              <p class="post__meta">
+                <span class="tag">{post.data.category}</span>
+                <span>约 {post.data.readingTime ?? 8} 分钟阅读</span>
+              </p>
+              <h3 class="post__title">
+                <a href={url(`/journal/${post.id}/`)}>{post.data.title}</a>
+              </h3>
+              <p class="post__excerpt">{post.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>

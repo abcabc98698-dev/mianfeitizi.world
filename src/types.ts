@@ -75,6 +75,12 @@ export interface SiteConfig {
     twitterHandle: string;
     themeColor: string;
   };
+  verification?: {
+    google?: string;
+    bing?: string;
+    baidu?: string;
+    shenma?: string;
+  };
   copyright: string;
 }
 

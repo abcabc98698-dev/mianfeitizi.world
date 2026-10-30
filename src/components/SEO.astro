@@ -10,8 +10,15 @@ export interface SEOProps {
   type?: 'website' | 'article';
   publishedTime?: Date;
   modifiedTime?: Date;
+  author?: string;
+  category?: string;
+  tags?: string[];
   noindex?: boolean;
   schema?: Record<string, unknown>[];
+  googleVerification?: string;
+  bingVerification?: string;
+  baiduVerification?: string;
+  shenmaVerification?: string;
 }
 
 type Props = SEOProps;
@@ -24,11 +31,20 @@ const {
   type = 'website',
   publishedTime,
   modifiedTime,
+  author,
+  category,
+  tags,
   noindex = false,
   schema = [],
+  googleVerification = site.verification?.google,
+  bingVerification = site.verification?.bing,
+  baiduVerification = site.verification?.baidu,
+  shenmaVerification = site.verification?.shenma,
 } = Astro.props;
 
 const fullTitle = title ? `${title} ${site.seo.titleSeparator} ${site.name}` : site.seo.defaultTitle;
+
+// 严格保证 Canonical 唯一、权威、带尾部斜杠、自引用 HTTPS 生产域名
 const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const canonical = new URL(canonicalPath, Astro.site ?? 'https://mianfeitizi.world').href;
 const ogImage = absoluteUrl(image, Astro.site);
@@ -37,6 +53,8 @@ const ogImage = absoluteUrl(image, Astro.site);
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+
+{/* 索引指令：生产环境默认 index, follow 并开放大图与富文本摘要预览 */}
 {
   noindex ? (
     <meta name="robots" content="noindex, follow" />
@@ -44,11 +62,20 @@ const ogImage = absoluteUrl(image, Astro.site);
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   )
 }
+
+{/* 搜索引擎站长平台所有权验证 (直接以原生 HTML 标签输出，0 客户端 JS 依赖) */}
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+{baiduVerification && <meta name="baidu-site-verification" content={baiduVerification} />}
+{shenmaVerification && <meta name="shenma-site-verification" content={shenmaVerification} />}
+
 <meta name="theme-color" content={site.seo.themeColor} />
 <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
-<link rel="sitemap" href={url('/sitemap-index.xml')} />
+<link rel="sitemap" type="application/xml" title="Sitemap" href={url('/sitemap.xml')} />
+<link rel="sitemap" type="application/xml" title="Sitemap Index" href={url('/sitemap-index.xml')} />
 <link rel="alternate" type="application/rss+xml" title={`${site.name} Journal`} href={url('/rss.xml')} />
 
+{/* Open Graph 社交元数据 */}
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content={site.locale} />
@@ -57,9 +84,15 @@ const ogImage = absoluteUrl(image, Astro.site);
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImage} />
 {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+
+{/* 文章类型专属元数据 */}
+{type === 'article' && author && <meta property="article:author" content={author} />}
+{type === 'article' && category && <meta property="article:section" content={category} />}
+{type === 'article' && tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 {modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
 
+{/* Twitter Card 元数据 */}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
@@ -67,4 +100,5 @@ const ogImage = absoluteUrl(image, Astro.site);
 {imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
 {site.seo.twitterHandle && <meta name="twitter:site" content={site.seo.twitterHandle} />}
 
+{/* JSON-LD 结构化数据输出 */}
 {schema.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}

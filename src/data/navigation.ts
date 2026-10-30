@@ -2,12 +2,14 @@ import type { FooterColumn, NavigationItem } from '../types';
 
 export const primaryNav: NavigationItem[] = [
   { label: '首页', href: '/' },
-  { label: '42家机场库', href: '/brands/' },
-  { label: '免费资源专题', href: '/free-nodes/' },
-  { label: '机场FAQ百科', href: '/faq/' },
-  { label: '跑路预警雷达', href: '/runaway-watch/' },
-  { label: '客户端大全', href: '/clients/' },
-  { label: '深度评测', href: '/journal/' },
+  { label: 'VPN指南', href: '/vpn/' },
+  { label: '机场推荐', href: '/jichang/' },
+  { label: 'Clash配置', href: '/clash/' },
+  { label: '节点测速', href: '/nodes/' },
+  { label: '梯子避坑', href: '/tizi/' },
+  { label: '免费资源', href: '/free/' },
+  { label: '使用教程', href: '/tutorial/' },
+  { label: '42家品牌库', href: '/brands/' },
 ];
 
 export const headerActions = {
@@ -17,18 +19,30 @@ export const headerActions = {
 
 export const footerColumns: FooterColumn[] = [
   {
-    title: '核心导航与万字专题矩阵',
+    title: '八大核心栏目索引',
     links: [
-      { label: '42家机场全景评测库', href: '/brands/' },
-      { label: '免费梯子与全球免费资源箱', href: '/free-nodes/' },
-      { label: '机场百科全书级 FAQ 中心', href: '/faq/' },
-      { label: '机场跑路预警与风控雷达', href: '/runaway-watch/' },
-      { label: '全平台代理客户端下载', href: '/clients/' },
-      { label: '深度评测与防跑路教程', href: '/journal/' },
+      { label: 'VPN 科学上网全景指南', href: '/vpn/' },
+      { label: '2026 高速专线机场推荐', href: '/jichang/' },
+      { label: 'Clash 规则与客户端配置', href: '/clash/' },
+      { label: '海外落地节点测速与选型', href: '/nodes/' },
+      { label: '防跑路梯子选型与避坑雷达', href: '/tizi/' },
+      { label: '免费梯子与出海免费资源箱', href: '/free/' },
+      { label: '科学上网与客户端小白教程', href: '/tutorial/' },
+      { label: '42 家专线机场全景评测库', href: '/brands/' },
     ],
   },
   {
-    title: 'Top 主推品牌档案',
+    title: '深度专题与工具矩阵',
+    links: [
+      { label: '机场百科全书级 FAQ 中心', href: '/faq/' },
+      { label: '机场跑路预警与防失联雷达', href: '/runaway-watch/' },
+      { label: '全平台代理客户端下载大全', href: '/clients/' },
+      { label: '深度技术评测与协议专栏', href: '/journal/' },
+      { label: '评测实验室与联系方式', href: '/contact/' },
+    ],
+  },
+  {
+    title: 'Top 6 年度主力专线品牌',
     links: [
       { label: 'TOP 1 · 光速云 (99元/年 IEPL)', href: '/brands/guangsuyun/' },
       { label: 'TOP 2 · 微风网络 (10Gbps 专线)', href: '/brands/weifeng/' },
@@ -42,7 +56,7 @@ export const footerColumns: FooterColumn[] = [
 
 export const legalNav: NavigationItem[] = [
   { label: '42家机场名录', href: '/brands/' },
-  { label: '免费资源中心', href: '/free-nodes/' },
+  { label: '免费资源中心', href: '/free/' },
   { label: '机场FAQ百科', href: '/faq/' },
   { label: '跑路预警雷达', href: '/runaway-watch/' },
   { label: '客户端下载', href: '/clients/' },
