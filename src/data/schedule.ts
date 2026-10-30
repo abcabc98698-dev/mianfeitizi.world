@@ -138,16 +138,16 @@ export const schedule: ScheduleDay[] = [
   },
   {
     short: '免费试用',
-    name: '支持新用户免费试用的专线机场（先测速后付费零风险）',
+    name: 'TOP 1 光速云领衔 & 支持新用户免费试用的专线机场（零风险体验）',
     classes: [
       {
-        time: '2小时',
+        time: 'TOP 01',
         period: 'am',
-        className: '宇宙云 · 新用户注册享 2 小时免费试用（年付88元/月付18元）',
-        instructor: 'IEPL专线 + VLESS · 含9Gbps实测图',
-        duration: '9折码: yuzhou666',
-        level: '晚高峰实测表现优异',
-        bookingUrl: '/brands/yuzhou/',
+        className: '光速云 · 2020老牌 IEPL+VLESS（轻量版99元/年折合8元/月 | 147元永久包）',
+        instructor: 'IEPL企业级专线 · 含实测与解锁图证',
+        duration: '9折码: AMM',
+        level: '替代免费梯子头号首选',
+        bookingUrl: '/brands/guangsuyun/',
       },
       {
         time: '2小时',

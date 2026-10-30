@@ -3,7 +3,7 @@ import type { YogaClass } from '../types';
 export const classes: YogaClass[] = [
   {
     title: '免费梯子真相与免费试用机场',
-    description: '剖析完全免费 VPN 的隐私风险，汇总支持新用户 2 小时免费试用的宇宙云、极连云、一翻云、闪跃与神行加速。',
+    description: '剖析完全免费 VPN 的隐私风险，首推 TOP 1 光速云（99元/年折合8元/月）及支持新用户免费试用的极连云、一翻云、闪跃与神行加速。',
     image: {
       src: '/media/sessions/vinyasa-dynamic-flow-session.webp',
       alt: '免费梯子与支持新用户免费试用的专线机场指南',
