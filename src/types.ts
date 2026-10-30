@@ -98,7 +98,7 @@ export interface CallToAction {
   href: string;
 }
 
-export interface YogaClass {
+export interface FeatureTopic {
   title: string;
   description: string;
   image: ImageData;
@@ -107,6 +107,7 @@ export interface YogaClass {
   intensity: string;
   href?: string;
 }
+export type YogaClass = FeatureTopic;
 
 export interface ScheduleItem {
   time: string;
@@ -169,7 +170,7 @@ export interface GalleryImage extends ImageData {
   href?: string;
 }
 
-export interface Retreat {
+export interface SpecialHighlight {
   title: string;
   description: string;
   date: string;
@@ -179,6 +180,7 @@ export interface Retreat {
   ctaLabel: string;
   bookingUrl: string;
 }
+export type Retreat = SpecialHighlight;
 
 export interface FAQ {
   question: string;

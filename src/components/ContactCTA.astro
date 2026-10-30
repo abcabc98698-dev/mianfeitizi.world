@@ -16,7 +16,7 @@ const titleParts = lines(cta.title).map((line) => line.split('{lotus}'));
 ---
 
 <section class:list={['cta', { 'cta--compact': !showContact }]} id="begin-practice" aria-labelledby="cta-title">
-  <img class="cta__bg" src={url(cta.image.src)} alt={cta.image.alt} width="2000" height="1333" loading="lazy" decoding="async" />
+  <img class="cta__bg" src={url(cta.image.src)} alt={cta.image.alt || '免费梯子跨境网络与专线机场评测实验室背景'} width="2000" height="1333" loading="lazy" decoding="async" />
   <div class="container cta__head">
     <h2 id="cta-title">
       {titleParts.map((parts, i) => (

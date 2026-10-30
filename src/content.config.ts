@@ -13,7 +13,7 @@ const journal = defineCollection({
     readingTime: z.number().int().positive().optional(),
     image: z.string(),
     imageAlt: z.string(),
-    author: z.string().default('Yoga Fitness Editorial'),
+    author: z.string().default('免费梯子评测实验室'),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

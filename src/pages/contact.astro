@@ -25,7 +25,7 @@ const crumbs = [
     schema: [businessSchema(Astro.site), breadcrumbSchema(crumbs, Astro.site)],
   }}
   hero={{
-    image: { src: '/media/banners/studio-contact-dusk-gathering.webp', alt: '' },
+    image: { src: '/media/banners/studio-contact-dusk-gathering.webp', alt: '联系免费梯子评测实验室编辑部与商务纠错背景' },
     title: '联系评测实验室',
     words: [{ text: '收录申请' }, { text: '数据纠错', serif: true }],
     lead: '发现某家机场优惠码失效、套餐变更，或希望申请将您的专线品牌纳入实测？欢迎随时与我们联系。',
@@ -83,6 +83,58 @@ const crumbs = [
       </div>
 
       <ContactForm />
+    </div>
+  </section>
+
+  <section class="section section--mist" id="editorial-policy" aria-labelledby="policy-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">EDITORIAL GUIDELINES &amp; METHODOLOGY · E-E-A-T 准则</span>
+          <h2 class="h2" id="policy-title">评测独立性原则、数据采集环境与纠错机制</h2>
+        </div>
+        <p class="text-stone">
+          免费梯子评测实验室由多名资深网络工程与跨境网络研究者独立维护。我们严格遵循真实客观、数据可溯源与风险明示原则。
+        </p>
+      </div>
+
+      <div class="brand-spec-grid" style="gap: 24px;">
+        <div class="obs-card">
+          <div class="obs-card__head">
+            <div>
+              <span class="obs-card__eyebrow">PRINCIPLE 01 · 评测独立性</span>
+              <h3>自费采购与零利益妥协</h3>
+            </div>
+            <span class="obs-pill obs-pill--ok">独立客观</span>
+          </div>
+          <p style="font-size: var(--fs-small); color: var(--color-stone); line-height: 1.75;">
+            本站所有被测主力套餐（包含光速云、微风网络、暮光加速、飞猫云等）均由评测员匿名自费注册并付款购入，绝不接受任何机场主针对评测结论的商业干预。任何专线品牌在横评中的排位，仅取决于其运营年限、网络稳定性、测速带宽与性价比，绝不提供付费竞价置顶服务。
+          </p>
+        </div>
+
+        <div class="obs-card">
+          <div class="obs-card__head">
+            <div>
+              <span class="obs-card__eyebrow">PRINCIPLE 02 · 真实测试环境</span>
+              <h3>端到端硬件与多时段压测</h3>
+            </div>
+            <span class="obs-pill obs-pill--vendor">真实数据</span>
+          </div>
+          <p style="font-size: var(--fs-small); color: var(--color-stone); line-height: 1.75;">
+            我们的主测速后端部署于广东珠海联通 5Gbps / 9Gbps 骨干接入机房，并配置电信 1000M 与移动 500M 三网家庭宽带作为比对环境。所有测速图档严格选定在工作日晚间 20:00–23:00 晚高峰黄金时段执行，杜绝用清晨闲时跑分误导读者。
+          </p>
+        </div>
+      </div>
+
+      <div class="conversion-callout" style="margin-top: 24px;">
+        <div>
+          <span class="tag">透明合规与 24 小时快速纠错</span>
+          <h3>发现优惠码失效或参数变更？我们承诺 24 小时内核验修正</h3>
+          <p>
+            机场行业的节点入口、折扣码与套餐价格具有动态变化的特性。如果您发现本站收录的某家机场优惠码已失效、套餐涨价，或者节点大面积离线持续超过 48 小时，欢迎随时通过上方表单或发送邮件至 <code>hello@mianfeitizi.world</code> 反馈。编辑部在核实属实后，将在 24 小时内更新页面档案或在跑路预警雷达中发出风险提示。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

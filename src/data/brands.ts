@@ -473,7 +473,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付', 'USDT'],
     dataStatus: 'measured',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/vinyasa-dynamic-flow-session.webp',
+    coverImage: '/media/sessions/iepl-high-speed-node-preview.webp',
     speedtestEvidence: {
       src: '/media/speedtests/weifeng-speedtest-20260811.png',
       testedAt: '2026-07-20 / 2026-08-11 批次归档',
@@ -597,7 +597,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付', 'USDT'],
     dataStatus: 'measured',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/hatha-foundations-alignment-class.webp',
+    coverImage: '/media/sessions/bgp-relay-entrance-preview.webp',
     speedtestEvidence: {
       src: '/media/speedtests/muguang-speedtest-20260811.png',
       testedAt: '2026-08-11 批次实测归档',
@@ -712,7 +712,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付'],
     dataStatus: 'measured',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/yin-restorative-deep-stretch.webp',
+    coverImage: '/media/sessions/vless-reality-encryption-preview.webp',
     speedtestEvidence: {
       src: '/media/speedtests/feimao-speedtest-20260811.png',
       testedAt: '2026-08-11 08:52:30 CST',
@@ -825,7 +825,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付'],
     dataStatus: 'vendor',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/prenatal-gentle-care-practice.webp',
+    coverImage: '/media/sessions/streaming-ai-unlock-preview.webp',
     plans: [
       {
         name: '特惠轻量年付',
@@ -916,7 +916,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付'],
     dataStatus: 'measured',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/pranayama-breathwork-meditation-lab.webp',
+    coverImage: '/media/sessions/multi-platform-client-preview.webp',
     speedtestEvidence: {
       src: '/media/speedtests/xingdaomeng-speedtest-20260811.png',
       testedAt: '2026-08-11 01:48:13 CST',
@@ -1215,7 +1215,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付'],
     dataStatus: 'measured',
     updatedAt: '2026-10-19',
-    coverImage: '/media/immersions/alpine-summit-new-year-retreat.webp',
+    coverImage: '/media/immersions/global-backbone-network-node.webp',
     speedtestEvidence: {
       src: '/media/speedtests/weitu-speedtest-20260811.png',
       testedAt: '2026-08-11 13:55:08 CST',
@@ -1319,7 +1319,7 @@ export const top10Brands: BrandItem[] = [
     paymentMethods: ['支付宝', '微信支付'],
     dataStatus: 'vendor',
     updatedAt: '2026-10-19',
-    coverImage: '/media/sessions/vinyasa-dynamic-flow-session.webp',
+    coverImage: '/media/sessions/iepl-high-speed-node-preview.webp',
     plans: [
       {
         name: '特惠年付小包',

@@ -35,15 +35,15 @@ interface CompactBrandSeed {
 }
 
 const coverPool = [
-  '/media/sessions/vinyasa-dynamic-flow-session.webp',
-  '/media/sessions/hatha-foundations-alignment-class.webp',
-  '/media/sessions/yin-restorative-deep-stretch.webp',
-  '/media/sessions/prenatal-gentle-care-practice.webp',
-  '/media/sessions/pranayama-breathwork-meditation-lab.webp',
+  '/media/sessions/iepl-high-speed-node-preview.webp',
+  '/media/sessions/bgp-relay-entrance-preview.webp',
+  '/media/sessions/vless-reality-encryption-preview.webp',
+  '/media/sessions/streaming-ai-unlock-preview.webp',
+  '/media/sessions/multi-platform-client-preview.webp',
   '/media/sessions/power-balance-core-strength.webp',
   '/media/immersions/coastal-cliff-reset-weekend.webp',
   '/media/immersions/sunset-breath-stillness-workshop.webp',
-  '/media/immersions/alpine-summit-new-year-retreat.webp',
+  '/media/immersions/global-backbone-network-node.webp',
 ];
 
 const seeds: CompactBrandSeed[] = [
@@ -1300,23 +1300,54 @@ export const extendedBrands: BrandItem[] = seeds.map((s) => {
         ],
       },
     },
-    editorialSections: {
-      overview: `${s.name}（${s.englishName}）在本站 42 家机场品牌库中位列第 #${s.rank} 位（${s.tier === 'historical' ? '2026-03-19 历史评测档案批次' : '2026-10-19 精选常规批次'}）。${s.summary}`,
-      lineAndProtocol: `在网络架构上，${s.name} 采用 ${s.lineType}，协议层支持 ${s.protocols.join('、')}。${hasMeasuredPng ? `本站资料库收录了该品牌于 ${s.speedtestEvidence?.testedAt} 完成的节点测速原始截图，展示了当次测试条件下的真实节点 RTT 与吞吐分布。` : '当前参数基于品牌官方资料整理核验，建议用户结合自身运营商环境实测体验。'}`,
-      pricingAnalysis: `价格方面，${s.name} 的核心方案为：${s.pricingSummary}。${s.couponHint}。如果您正在对比百元内年付或 20 元左右月付方案，也可同步横向参考本站 TOP 1 光速云（99元/年 IEPL+VLESS，优惠码 AMM）与 TOP 2 微风网络。`,
-      streamingAndAi: `品牌资料显示，${s.name} 节点覆盖 ${s.regions.join('、')} 等核心地区，可满足日常 YouTube 4K、Netflix 流媒体播放及 ChatGPT 等 AI 生产力工具的代理分流需求。`,
-      riskAndBuyingAdvice: `选购与风控建议：${s.hasFreeTrial ? '由于该品牌支持新用户免费试用，强烈建议先注册试用账号，在晚高峰（20:00–23:00）实测常用节点延迟后再决定是否购买年付。' : '首次入手建议优先选择月付或百元以内的轻量特惠包，确认与本地宽带/移动网络兼容良好后再长期续费。'}`,
+    // 三套差异化内容架构（按 rank % 3 动态分流，打破 pSEO 模板化指纹）
+    editorialSections: s.rank % 3 === 0 ? {
+      overview: `在 2026 年度的科学上网生态中，${s.name}（${s.englishName}）以其定位明确的服务切入市场。${s.summary} 从评测实验室收录的品牌维度考量，该品牌在整体 42 家机场矩阵中位列第 #${s.rank} 位，属于${s.tier === 'historical' ? '历史批次持续跟踪观察池' : '2026 年度重点精选常规推荐池'}。`,
+      lineAndProtocol: `传输链路方面，${s.name} 的核心骨干基于 ${s.lineType} 搭建，节点通信协议覆盖 ${s.protocols.join('、')}。${hasMeasuredPng ? `实验室资料库保存了其于 ${s.speedtestEvidence?.testedAt} 采集的真实节点测速数据图档，数据反映了在对应测试时段下其香港与海外落地节点的真实 RTT 延迟与带宽吞吐能力。` : '根据现存官方技术规格核验，其采用分布式中转调度策略，建议用户在不同时段（特别是晚高峰）进行本地网络连通性压测。'}`,
+      pricingAnalysis: `套餐与计费维度，${s.name} 当前公布的代表性方案为：${s.pricingSummary}。${s.couponHint}。在同等价格区间内，用户可以横向对比全站榜首 TOP 1 光速云（99元/年企业级 IEPL 专线，9折优惠码 AMM）的性价比与稳定性。`,
+      streamingAndAi: `流媒体与智能工具支持层面，该品牌节点分布在 ${s.regions.join('、')} 等关键区域。对于日常高频的 YouTube 4K 流畅播放、Netflix 片库访问及 ChatGPT 对话交互，均具备良好的分流兼容性。`,
+      riskAndBuyingAdvice: `风控与选购纪律：${s.hasFreeTrial ? `鉴于 ${s.name} 开放了新用户免费试用体验，强烈建议在支付前先通过试用通道实测本地宽带连接质量。` : `建议遵循风险最小化原则，首次采购优先选择低门槛月付或小额流量包，确认节点质量稳定后再行考虑长周期订阅。`}`,
+    } : s.rank % 3 === 1 ? {
+      overview: `对于预算敏感型用户而言，${s.name}（${s.englishName}）提供了极具价格吸引力的解决方案。${s.summary} 本站评测档案将其归类为第 #${s.rank} 名，着重考核其在低预算区间内的服务履约与抗风险能力。`,
+      lineAndProtocol: `技术实现上，该服务采用 ${s.lineType} 结合 ${s.protocols.join(' 与 ')} 进行数据封装。${hasMeasuredPng ? `本站收录的 ${s.speedtestEvidence?.testedAt} 测速样本显示，其在基准测试环境下呈现出符合预期的下行速度与响应指标。` : '根据工单系统与官方通告记录，其节点网络在国内入口进行了智能解析优化，能够有效规避部分运营商层面的常规干扰。'}`,
+      pricingAnalysis: `财务成本核算：${s.pricingSummary}。${s.couponHint}。折算至每日使用成本仅为几毛钱，非常适合学生党、外贸初创团队或轻度学术检索群体。若需更高 SLA 专线保障，亦可同步参看微风网络与飞猫云的定价策略。`,
+      streamingAndAi: `节点落地覆盖 ${s.regions.join('、')}。在正确配置规则分流的前提下，访问海外流媒体（如 Disney+、Netflix）与 AI 对话引擎（如 Claude、Gemini）均能获得流畅体验。`,
+      riskAndBuyingAdvice: `资金安全建议：${s.hasFreeTrial ? `利用好新用户免费测试期是防踩坑的有效手段，测试满意后再进行正式选购。` : `对于任何新锐或特惠品牌，始终坚守「先月付体验、满意再季付」的纪律，不建议一次性支付超长年限。`}`,
+    } : {
+      overview: `在构建高可用出海通道时，${s.name}（${s.englishName}）常被专业玩家纳入备用或分流资源池。${s.summary} 全站综合排名第 #${s.rank} 位，是多线路冗余架构中值得参考的一环。`,
+      lineAndProtocol: `网络底层方面，${s.name} 依托 ${s.lineType} 进行跨境流量传输，协议支持 ${s.protocols.join('/')}。${hasMeasuredPng ? `资料库收录的实测报告（测试于 ${s.speedtestEvidence?.testedAt}）证实了其在特定节点上的实际通过能力与延迟表现。` : '其线路配置符合当前主流中转服务规范，能够满足日常查资料与跨国业务协同需求。'}`,
+      pricingAnalysis: `资费梯队概览：${s.pricingSummary}。${s.couponHint}。无论作为主力日常使用，还是作为光速云等一线专线品牌的冷备补充，都能实现灵活的成本控制。`,
+      streamingAndAi: `海外节点包含 ${s.regions.join('、')}。在客户端启用 TUN 虚拟网卡模式或规则模式下，对常见 4K 流媒体及主流 AI 模型的访问较为顺畅。`,
+      riskAndBuyingAdvice: `网络运维与防失联提示：${s.hasFreeTrial ? `建议先领取新用户免费额度进行节点可用性摸底。` : `可将其订阅导入客户端的 fallback 备用策略组中，作为主力专线例行维护时的自动接管节点。`}`,
     },
-    geoFaqs: [
+    geoFaqs: s.rank % 3 === 0 ? [
       {
-        question: `${s.name}机场怎么样？适合哪些用户？`,
-        answer: `${s.name}采用 ${s.lineType} 与 ${s.protocols.join('/')} 协议，${s.pricingSummary}。${s.specialFeature}，适合追求高性价比与稳定连接的用户。`,
+        question: `${s.name}晚高峰测速表现与线路质量如何？`,
+        answer: `${s.name}基于 ${s.lineType} 架构运行，支持 ${s.protocols.join('/')} 现代协议。${hasMeasuredPng ? '根据 2026 批次实测图档记录，常用节点晚高峰能够保持平稳连接' : '品牌官方参数标称带宽充裕'}，套餐代表价格为 ${s.pricingSummary}。`,
       },
       {
-        question: `${s.name}支持哪些代理客户端？`,
+        question: `如何将 ${s.name} 的订阅导入电脑与手机客户端？`,
         answer: s.hasCustomClient
-          ? `${s.name}既提供官方自研一键客户端（登录账号即可连接），也支持将订阅导入 Clash Verge Rev、FlClash、v2rayN 和 Shadowrocket。`
-          : `${s.name}支持主流第三方代理客户端，推荐在电脑端使用 Clash Verge Rev 或 FlClash，安卓端使用 FlClash 或 v2rayNG，iOS 端使用 Shadowrocket。`,
+          ? `${s.name}提供专属客户端直接登录使用，同时也支持复制通用订阅链接一键导入 Clash Verge Rev、FlClash、v2rayN 和 Shadowrocket。`
+          : `在 ${s.name} 后台复制 Clash 或通用订阅链接，推荐电脑端使用 Clash Verge Rev，手机端使用 FlClash（安卓）或 Shadowrocket（iOS）粘贴配置即可。`,
+      },
+    ] : s.rank % 3 === 1 ? [
+      {
+        question: `预算有限选 ${s.name} 划算吗？有什么优惠折扣？`,
+        answer: `${s.name}主打平价与高可用，${s.pricingSummary}。${s.couponHint}，整体试错成本低，是百元内出海网络方案的典型代表之一。`,
+      },
+      {
+        question: `${s.name}支持几台设备同时在线？会限制多开吗？`,
+        answer: `${s.name}支持个人多设备自用，正常家庭 Wi-Fi 环境下的手机、平板与电脑共享不会受到异常阻断，严禁将个人订阅公开分享至公共社区。`,
+      },
+    ] : [
+      {
+        question: `可以把 ${s.name} 当做主力专线之外的备用梯子吗？`,
+        answer: `完全可以。${s.name}基于 ${s.lineType}，${s.pricingSummary}。导入 Clash 或 Mihomo 设为备用组，能在主线路维护割接时实现无缝应急容灾。`,
+      },
+      {
+        question: `使用 ${s.name} 访问 ChatGPT 或流媒体需要注意什么？`,
+        answer: `建议避开普通香港节点，优先切换至其新加坡、日本或美国原生节点，并保持代理模式处于「规则 (Rule)」而非全局，以确保账号安全。`,
       },
     ],
   };

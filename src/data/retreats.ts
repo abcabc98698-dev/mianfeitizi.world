@@ -33,7 +33,7 @@ export const retreats: Retreat[] = [
     date: '2026-10-25',
     location: '全平台客户端配置中心',
     image: {
-      src: '/media/immersions/alpine-summit-new-year-retreat.webp',
+      src: '/media/immersions/global-backbone-network-node.webp',
       alt: '六大操作系统科学上网代理客户端下载与配置教程',
     },
     price: '6 大系统开源直链',

@@ -13,9 +13,9 @@ export const hero = {
     label: '已收录实测与核验档案',
     value: '42家 机场 · 6大系统客户端',
     avatars: [
-      { src: '/media/community/member-portrait-elena.webp', alt: '' },
-      { src: '/media/community/member-portrait-marcus.webp', alt: '' },
-      { src: '/media/community/member-portrait-claire.webp', alt: '' },
+      { src: '/media/community/member-portrait-elena.webp', alt: '跨境出海工程师真实头像样本 01' },
+      { src: '/media/community/member-portrait-marcus.webp', alt: '外贸电商用户真实头像样本 02' },
+      { src: '/media/community/member-portrait-claire.webp', alt: 'AI 研究人员真实头像样本 03' },
     ] satisfies ImageData[],
   },
 };

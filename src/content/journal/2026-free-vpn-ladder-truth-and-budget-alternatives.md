@@ -4,7 +4,7 @@ description: "深度剖析永久免费梯子与电报群公益节点的四大安
 pubDate: 2026-10-19
 updatedDate: 2026-10-19
 category: "免费梯子避坑"
-image: "/media/journal/sustainable-weekly-yoga-habit-cover.webp"
+image: "/media/journal/free-vpn-risk-budget-iepl-cover.webp"
 imageAlt: "2026免费梯子安全分析与百元内年付IEPL专线平替指南"
 author: "免费梯子评测实验室"
 tags: ["免费梯子", "免费试用机场", "便宜年付机场", "光速云", "科学上网安全"]
