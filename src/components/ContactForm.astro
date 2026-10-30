@@ -2,12 +2,12 @@
 import { site } from '../config/site';
 
 const action = site.forms.contactAction;
-const topics = ['A free trial class', 'Memberships', 'Private sessions', 'Retreats & workshops', 'Something else'];
+const topics = ['机场优惠码更新 / 价格纠错', '申请新机场品牌实测收录', '客户端配置问题咨询', '商务合作交流', '其他反馈建议'];
 ---
 
 <div class="form-card">
-  <h2 class="form-card__title" id="contact-form-title">Send Us a Message</h2>
-  <p class="form-card__intro">Fields marked with an asterisk (*) are required.</p>
+  <h2 class="form-card__title" id="contact-form-title">提交信息或反馈</h2>
+  <p class="form-card__intro">标有星号 (*) 的字段为必填项。</p>
 
   <form
     id="contact-form"
@@ -19,39 +19,39 @@ const topics = ['A free trial class', 'Memberships', 'Private sessions', 'Retrea
   >
     <div class="form-grid">
       <div class="field">
-        <label for="cf-name">Name *</label>
+        <label for="cf-name">您的称呼 *</label>
         <input id="cf-name" name="name" type="text" autocomplete="name" required aria-describedby="cf-name-error" />
         <p class="field__error" id="cf-name-error" data-error-for="cf-name"></p>
       </div>
       <div class="field">
-        <label for="cf-email">Email *</label>
+        <label for="cf-email">联系邮箱 *</label>
         <input id="cf-email" name="email" type="email" autocomplete="email" required aria-describedby="cf-email-error" />
         <p class="field__error" id="cf-email-error" data-error-for="cf-email"></p>
       </div>
       <div class="field">
-        <label for="cf-phone">Phone <span class="field__optional">(optional)</span></label>
-        <input id="cf-phone" name="phone" type="tel" autocomplete="tel" />
+        <label for="cf-phone">Telegram / 微信 <span class="field__optional">(选填)</span></label>
+        <input id="cf-phone" name="phone" type="text" />
       </div>
       <div class="field">
-        <label for="cf-topic">I'm asking about</label>
+        <label for="cf-topic">反馈事项类型</label>
         <select id="cf-topic" name="topic">
           {topics.map((topic) => <option>{topic}</option>)}
         </select>
       </div>
       <div class="field field--full">
-        <label for="cf-message">Message *</label>
+        <label for="cf-message">详细内容说明 *</label>
         <textarea id="cf-message" name="message" rows="6" required aria-describedby="cf-message-error"></textarea>
         <p class="field__error" id="cf-message-error" data-error-for="cf-message"></p>
       </div>
 
       <div class="hp-field" aria-hidden="true">
-        <label for="cf-company">Leave this field empty</label>
+        <label for="cf-company">请勿填写此项</label>
         <input id="cf-company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
       <div class="field--full form-actions">
-        <button class="btn btn--dark" type="submit">Send Message</button>
-        <p class="form-note">We reply within one working day.</p>
+        <button class="btn btn--dark" type="submit">提交反馈</button>
+        <p class="form-note">评测编辑组通常在 1 个工作日内回复。</p>
       </div>
       <p class="field--full form-status" role="status" aria-live="polite" data-form-status></p>
     </div>

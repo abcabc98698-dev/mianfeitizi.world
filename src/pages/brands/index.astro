@@ -1,0 +1,342 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { brands, getTop10Brands } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL, AFFILIATE_DISCLOSURE } from '../../data/links';
+import { breadcrumbSchema, itemListSchema, faqPageSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+
+const top10 = getTop10Brands();
+const measuredCount = brands.filter((b) => Boolean(b.speedtestEvidence)).length;
+const freeTrialCount = brands.filter((b) => b.hasFreeTrial).length;
+const customClientCount = brands.filter((b) => b.hasCustomClient).length;
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '42家机场评测库', href: '/brands/' },
+];
+
+const directoryFaqs = [
+  {
+    question: '这 42 家机场是如何排序的？哪几家最值得优先考虑？',
+    answer:
+      '本站将 42 家机场分为三个梯队：第一梯队为「Top 10 年度主力推荐」（以 2020 年老牌 IEPL+VLESS 旗舰光速云、全节点 10Gbps 微风网络、88 折大包暮光加速、自研客户端飞猫云为首）；第二梯队为「#11–#28 精选常规批次」（含多家提供 2026-08-11 真实测速图档与新用户免费试用的高性价比品牌）；第三梯队为「#29–#42 历史评测档案批次」（收录 WgetCloud、白月光、飞鸟、青云梯等经典老牌及历史批次记录）。',
+  },
+  {
+    question: '如何区分哪些数据是「本站实测」，哪些是「品牌官方资料」？',
+    answer:
+      '每张品牌卡片及详情页顶部均带有明确的数据状态标签（Data Status）：标有「含实测图证 (Measured)」的 17 家品牌，详情页内均附带 2026-08-11 原始未裁剪节点测速 PNG 截图（光速云另含 5 张多地区流媒体解锁实测图）；其余套餐价格、流量配额与带宽标称值均按「品牌资料核验 (Vendor)」管理并标注核验日期。',
+  },
+  {
+    question: '结账时如何使用页面上的优惠码？',
+    answer:
+      '在对应机场卡片或详情页复制优惠码（如光速云 9 折码 AMM、微风网络 9 折码 flat888、暮光加速 88 折码 muguang5555、Firefly 8 折码 firefly），进入官网选择套餐后，在订单结账界面的「优惠码 / Promo Code」输入框粘贴并点击验证，系统会自动扣减对应金额。',
+  },
+];
+---
+
+<PageLayout
+  seo={{
+    title: '2026年42家专线机场全景评测库与最新优惠码汇总 (IEPL/VLESS/不限时包)',
+    description:
+      '完整收录 2026 年 42 家科学上网专线机场实测数据、套餐价格、优惠码与客户端支持情况。涵盖光速云、微风网络、暮光加速、飞猫云等 Top 10 主力推荐及 17 张真实节点测速图档。',
+    image: '/media/banners/journal-editorial-stones-hero.webp',
+    imageAlt: '42家科学上网专线机场全景评测库与优惠码汇总',
+    schema: [
+      breadcrumbSchema(crumbs, Astro.site),
+      itemListSchema(
+        '2026年42家专线机场评测排行榜',
+        '按专线质量、运营年限、测速图证与性价比综合排序的42家机场目录',
+        brands.map((b) => ({
+          name: `${b.rank}. ${b.name}`,
+          url: `/brands/${b.slug}/`,
+          description: b.tagline,
+          position: b.rank,
+        })),
+        Astro.site,
+      ),
+      faqPageSchema(directoryFaqs),
+    ],
+  }}
+  hero={{
+    image: { src: '/media/banners/journal-editorial-stones-hero.webp', alt: '' },
+    eyebrow: '42 AIRPORT BRANDS DIRECTORY · 2026-10-19 核验更新',
+    title: '42家机场全景评测库',
+    words: [{ text: '42家机场' }, { text: '全景评测库', serif: true }],
+    lead: '涵盖 Top 10 主力专线、17 份真实节点测速图档、百元内平价年付包与永久不限时流量包。支持按协议、预算、免费试用与专属客户端一键筛选。',
+    breadcrumbs: crumbs,
+  }}
+>
+  <section class="section" aria-labelledby="top10-table-title">
+    <div class="container">
+      <div class="compliance-banner">
+        <p>{AFFILIATE_DISCLOSURE}</p>
+      </div>
+
+      <SectionHeading
+        id="top10-table-title"
+        title="Top 10 年度主力机场横向速查表"
+        intro="优先从运营稳定、具备 IEPL/IPLC 专线与专属折扣码的前十名主力品牌中挑选。点击「深度评测」可查看完整套餐与实验室图表。"
+      >
+        <Button href="/free-nodes/" variant="line">查看免费梯子与试用专题</Button>
+      </SectionHeading>
+
+      <div class="table-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>排名 / 品牌</th>
+              <th>成立年份</th>
+              <th>核心线路与协议</th>
+              <th>代表套餐与价格</th>
+              <th>专属优惠码</th>
+              <th>特色亮点</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {top10.map((b) => {
+              const link = getBrandLink(b.slug);
+              return (
+                <tr class:list={{ 'is-top1': b.rank === 1 }}>
+                  <td>
+                    <div class="table-brand">
+                      <span class="rank-chip">#{b.rank}</span>
+                      <div>
+                        <a class="table-brand__name" href={url(`/brands/${b.slug}/`)}>{b.name}</a>
+                        <span class="table-brand__sub">{b.badge}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{b.foundedYear}</td>
+                  <td>
+                    <div>{b.lineType}</div>
+                    <small class="text-stone">{b.protocols.join(' / ')}</small>
+                  </td>
+                  <td>{b.pricingSummary}</td>
+                  <td>
+                    {link.couponCode ? (
+                      <div class="coupon-pill">
+                        <code>{link.couponCode}</code>
+                        <span>{link.couponDiscount}</span>
+                      </div>
+                    ) : (
+                      <span>按官网活动</span>
+                    )}
+                  </td>
+                  <td>
+                    <div class="feature-tags">
+                      {b.speedtestEvidence && <span class="mini-tag mini-tag--ok">含实测图</span>}
+                      {b.hasUnlimitedDurationPlan && <span class="mini-tag">有不限时包</span>}
+                      {b.hasCustomClient && <span class="mini-tag">专属客户端</span>}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="table-actions">
+                      <a class="btn btn--dark btn--sm" href={url(`/brands/${b.slug}/`)}>深度评测</a>
+                      <a
+                        class="btn btn--line btn--sm"
+                        href={link.registerUrl}
+                        target="_blank"
+                        rel={AFFILIATE_REL}
+                      >
+                        官网直达
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 42家完整筛选目录 -->
+  <section class="section section--mist" id="all-brands" aria-labelledby="all-brands-title" data-brand-directory>
+    <div class="container">
+      <SectionHeading
+        id="all-brands-title"
+        title="全部 42 家机场多维筛选器"
+        intro="支持按梯队、真实测速图证、免费试用、百元年付（月均≤8.5元）、不限时流量包与自研客户端实时筛选，或直接输入品牌名/协议搜索。"
+      />
+
+      <div class="filter-bar">
+        <div class="filter-tabs" role="group" aria-label="机场分类筛选">
+          <button type="button" class="filter-btn is-active" data-filter="all">全部品牌 ({brands.length})</button>
+          <button type="button" class="filter-btn" data-filter="top10">Top 10 主力推荐 (10)</button>
+          <button type="button" class="filter-btn" data-filter="measured">含2026-08-11实测图 ({measuredCount})</button>
+          <button type="button" class="filter-btn" data-filter="freetrial">支持免费试用 ({freeTrialCount})</button>
+          <button type="button" class="filter-btn" data-filter="budget">百元内年付 ≤8.5元/月</button>
+          <button type="button" class="filter-btn" data-filter="unlimited">永久不限时流量包</button>
+          <button type="button" class="filter-btn" data-filter="client">自带专属客户端 ({customClientCount})</button>
+          <button type="button" class="filter-btn" data-filter="historical">2026-03 历史批次档案 (14)</button>
+        </div>
+        <div class="filter-search">
+          <label for="brand-search-input" class="sr-only">搜索机场名称、协议或地区</label>
+          <input
+            id="brand-search-input"
+            type="search"
+            placeholder="搜索品牌名、VLESS、Trojan、土耳其、不限时..."
+            data-brand-search
+          />
+        </div>
+      </div>
+
+      <p class="filter-count" aria-live="polite" data-filter-status>当前显示全部 {brands.length} 家机场档案</p>
+
+      <div class="brand-cards-grid">
+        {brands.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          const filterTokens = [
+            brand.tier,
+            brand.speedtestEvidence ? 'measured' : '',
+            brand.hasFreeTrial ? 'freetrial' : '',
+            brand.minMonthlyEquivalent <= 8.5 ? 'budget' : '',
+            brand.hasUnlimitedDurationPlan ? 'unlimited' : '',
+            brand.hasCustomClient ? 'client' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          const searchText = `${brand.name} ${brand.englishName ?? ''} ${brand.aliases.join(' ')} ${brand.protocols.join(' ')} ${brand.lineType} ${brand.regions.join(' ')} ${brand.pricingSummary} ${link.couponCode ?? ''}`.toLowerCase();
+
+          return (
+            <article
+              class:list={['brand-dir-card', { 'brand-dir-card--featured': brand.rank <= 4 }]}
+              data-brand-card
+              data-filters={filterTokens}
+              data-search={searchText}
+            >
+              <div class="brand-dir-card__top">
+                <div class="brand-dir-card__badges">
+                  <span class="rank-chip">#{brand.rank}</span>
+                  <span class="tag">{brand.badge}</span>
+                </div>
+                <span class:list={['mini-status', `mini-status--${brand.dataStatus}`]}>
+                  {brand.dataStatus === 'measured' ? '含实测图证' : brand.dataStatus === 'historical' ? '历史档案' : '官方核验'}
+                </span>
+              </div>
+
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+                {brand.englishName && <small>{brand.englishName}</small>}
+              </h3>
+
+              <p class="brand-dir-card__tagline">{brand.tagline}</p>
+
+              <dl class="brand-dir-card__specs">
+                <div>
+                  <dt>成立时间</dt>
+                  <dd>{brand.foundedYear}</dd>
+                </div>
+                <div>
+                  <dt>线路与协议</dt>
+                  <dd>{brand.lineType} · {brand.protocols.join('/')}</dd>
+                </div>
+                <div>
+                  <dt>代表价格</dt>
+                  <dd>{brand.pricingSummary}</dd>
+                </div>
+                <div>
+                  <dt>专属优惠码</dt>
+                  <dd>
+                    {link.couponCode ? (
+                      <strong class="coupon-highlight">{link.couponCode} ({link.couponDiscount})</strong>
+                    ) : (
+                      <span>按官网当期活动</span>
+                    )}
+                  </dd>
+                </div>
+              </dl>
+
+              <div class="brand-dir-card__chips">
+                {brand.speedtestEvidence && <span class="mini-tag mini-tag--ok">2026-08-11 实测截图</span>}
+                {brand.hasFreeTrial && <span class="mini-tag mini-tag--ok">支持免费试用</span>}
+                {brand.hasUnlimitedDurationPlan && <span class="mini-tag">提供不限时包</span>}
+                {brand.hasCustomClient && <span class="mini-tag">自带专属客户端</span>}
+              </div>
+
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={url(`/brands/${brand.slug}/`)}>
+                  查看深度评测 <Icon name="arrow-up" size={14} />
+                </a>
+                <a
+                  class="btn btn--line"
+                  href={link.registerUrl}
+                  target="_blank"
+                  rel={AFFILIATE_REL}
+                >
+                  官网注册
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 目录页 FAQ -->
+  <section class="section" aria-labelledby="dir-faq-title">
+    <div class="container faq">
+      <div class="faq__intro">
+        <h2 id="dir-faq-title">品牌库选型与数据说明</h2>
+        <p>了解我们如何维护 42 家机场的价格核验、优惠码有效性与原始测速图证归档。</p>
+        <Button href="/clients/">前往代理客户端大全</Button>
+      </div>
+      <div class="faq__list">
+        {directoryFaqs.map((item, i) => (
+          <details open={i === 0}>
+            <summary>{item.question}<span class="faq__icon" aria-hidden="true"><Icon name="plus" size={14} /></span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-brand-directory]').forEach((root) => {
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const searchInput = root.querySelector<HTMLInputElement>('[data-brand-search]');
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-brand-card]')];
+    const status = root.querySelector<HTMLElement>('[data-filter-status]');
+    let activeFilter = 'all';
+
+    const applyFilter = () => {
+      const q = (searchInput?.value ?? '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const filters = (card.dataset.filters ?? '').split(/\s+/);
+        const text = card.dataset.search ?? '';
+        const matchFilter = activeFilter === 'all' || filters.includes(activeFilter);
+        const matchSearch = !q || text.includes(q);
+        const show = matchFilter && matchSearch;
+        card.hidden = !show;
+        if (show) visibleCount++;
+      });
+
+      if (status) {
+        status.textContent = `当前筛选匹配到 ${visibleCount} 家机场档案（共 ${cards.length} 家）`;
+      }
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter ?? 'all';
+        buttons.forEach((b) => b.classList.toggle('is-active', b === btn));
+        applyFilter();
+      });
+    });
+
+    searchInput?.addEventListener('input', applyFilter);
+  });
+</script>

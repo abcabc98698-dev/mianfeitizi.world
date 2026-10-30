@@ -1,0 +1,216 @@
+---
+import type { BrandItem } from '../data/brands';
+import { url } from '../utils/url';
+
+interface Props {
+  brand: BrandItem;
+}
+
+const { brand } = Astro.props;
+const { observatory, speedtestEvidence, unlockEvidenceImages } = brand;
+
+const statusLabelMap: Record<string, { text: string; tone: string }> = {
+  Operational: { text: '实测可用 · Operational', tone: 'ok' },
+  Stable: { text: '连接稳定 · Stable', tone: 'ok' },
+  'Vendor Claimed': { text: '品牌声明支持 · Vendor Spec', tone: 'vendor' },
+  'Vendor Spec': { text: '官方标称参数 · Vendor Spec', tone: 'vendor' },
+  Partial: { text: '部分区域可用 · Partial', tone: 'warn' },
+  'Peak Fluctuation': { text: '晚高峰偶有波动 · Peak', tone: 'warn' },
+  'Not Tested': { text: '待独立复测 · Not Tested', tone: 'muted' },
+};
+---
+
+<section class="section section--mist" id="observatory" aria-labelledby="observatory-title">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="tag">{brand.dataStatus === 'measured' ? 'DATA STATUS: MEASURED (含2026-08-11实测图证)' : brand.dataStatus === 'historical' ? 'DATA STATUS: HISTORICAL ARCHIVE (2026-03历史批次)' : 'DATA STATUS: VENDOR VERIFIED (2026-10官方资料核验)'}</span>
+        <h2 id="observatory-title" style="margin-top:12px">{brand.name} · 实验室级网络监测与解锁矩阵</h2>
+        <p>遵循数据透明原则：明确区分本站 2026-08-11 原始测速截图记录（Measured）与品牌官方声明参数（Vendor），不伪造单点速度排名。</p>
+      </div>
+    </div>
+
+    <div class="obs-grid">
+      <!-- 图表 1：节点吞吐与延迟监测报告 -->
+      <article class="obs-card">
+        <header class="obs-card__head">
+          <div>
+            <span class="obs-card__eyebrow">01 / PERFORMANCE MONITORING REPORT</span>
+            <h3>区域节点延迟与吞吐分布</h3>
+          </div>
+          <span class="obs-badge obs-badge--neutral">{brand.protocols.join(' / ')}</span>
+        </header>
+
+        <div class="obs-bars">
+          {observatory.performanceNodes.map((node) => {
+            const st = statusLabelMap[node.stability] ?? { text: node.stability, tone: 'vendor' };
+            return (
+              <div class="obs-bar-item">
+                <div class="obs-bar-item__top">
+                  <div>
+                    <strong>{node.region}</strong>
+                    <code class="obs-code">{node.code}</code>
+                  </div>
+                  <span class={`obs-pill obs-pill--${st.tone}`}>{st.text}</span>
+                </div>
+                <div class="obs-bar-track" aria-hidden="true">
+                  <div class="obs-bar-fill" style={`width:${node.barPercent}%`} />
+                </div>
+                <div class="obs-bar-item__meta">
+                  <span>RTT / 延迟：<strong>{node.latencyRange}</strong></span>
+                  <span>通道规格：{node.bandwidthLabel}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </article>
+
+      <!-- 图表 2：流媒体与 AI 生产力解锁矩阵 -->
+      <article class="obs-card">
+        <header class="obs-card__head">
+          <div>
+            <span class="obs-card__eyebrow">02 / SERVICE AVAILABILITY MATRIX</span>
+            <h3>AI 生产力与 4K 流媒体可用性矩阵</h3>
+          </div>
+          <span class="obs-badge obs-badge--neutral">{brand.regions.length} 大地区覆盖</span>
+        </header>
+
+        <div class="obs-matrix">
+          {observatory.serviceMatrix.map((item) => {
+            const st = statusLabelMap[item.status] ?? { text: item.status, tone: 'vendor' };
+            return (
+              <div class="obs-matrix-card">
+                <div class="obs-matrix-card__top">
+                  <span class="obs-category">{item.category}</span>
+                  <span class={`obs-pill obs-pill--${st.tone}`}>{st.text}</span>
+                </div>
+                <h4>{item.service}</h4>
+                <p class="obs-matrix-card__region">推荐分流地区：<strong>{item.regionHint}</strong></p>
+                <p class="obs-matrix-card__note">{item.note}</p>
+              </div>
+            );
+          })}
+        </div>
+      </article>
+    </div>
+
+    <!-- 图表 3：跨境专线网络路径拓扑 -->
+    <article class="obs-card obs-card--full">
+      <header class="obs-card__head">
+        <div>
+          <span class="obs-card__eyebrow">03 / NETWORK PATH OBSERVATORY</span>
+          <h3>{brand.name} 跨境专线四阶传输拓扑图</h3>
+        </div>
+        <span class="obs-badge obs-badge--neutral">{brand.lineType}</span>
+      </header>
+
+      <div class="obs-topology">
+        <div class="obs-node">
+          <span class="obs-node__step">STAGE 01 · 国内接入层</span>
+          <h4>BGP 多线智能入口</h4>
+          <p>{observatory.topology.ingress}</p>
+        </div>
+        <div class="obs-arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 16" width="48" height="16" fill="none">
+            <path d="M0 8H44M44 8L37 2M44 8L37 14" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="obs-node obs-node--highlight">
+          <span class="obs-node__step">STAGE 02 · 过境骨干层</span>
+          <h4>{brand.lineType}</h4>
+          <p>{observatory.topology.backbone}</p>
+        </div>
+        <div class="obs-arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 16" width="48" height="16" fill="none">
+            <path d="M0 8H44M44 8L37 2M44 8L37 14" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="obs-node">
+          <span class="obs-node__step">STAGE 03 · 协议加密层</span>
+          <h4>{brand.protocols.join(' / ')} 隧道</h4>
+          <p>{observatory.topology.protocolLayer}</p>
+        </div>
+        <div class="obs-arrow" aria-hidden="true">
+          <svg viewBox="0 0 48 16" width="48" height="16" fill="none">
+            <path d="M0 8H44M44 8L37 2M44 8L37 14" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </div>
+        <div class="obs-node">
+          <span class="obs-node__step">STAGE 04 · 海外落地层</span>
+          <h4>原生 ISP 与分流解锁</h4>
+          <p>{observatory.topology.egress}</p>
+        </div>
+      </div>
+
+      <div class="obs-tags">
+        {observatory.topology.highlights.map((h) => (
+          <span class="tag">{h}</span>
+        ))}
+        {brand.regions.map((r) => (
+          <span class="tag">落地：{r}</span>
+        ))}
+      </div>
+    </article>
+
+    <!-- 真实测速截图与解锁证据归档（双轨结合） -->
+    {(speedtestEvidence || (unlockEvidenceImages && unlockEvidenceImages.length > 0)) && (
+      <article class="obs-card obs-card--full" id="measured-evidence">
+        <header class="obs-card__head">
+          <div>
+            <span class="obs-card__eyebrow">04 / RAW MEASURED EVIDENCE ARCHIVE</span>
+            <h3>{brand.name} 原始节点测速截图与解锁实测图证</h3>
+          </div>
+          <span class="obs-pill obs-pill--ok">原始未裁剪图档 · Measured Evidence</span>
+        </header>
+
+        <div class="evidence-layout">
+          {speedtestEvidence && (
+            <figure class="evidence-main">
+              <div class="evidence-img-wrap">
+                <img
+                  src={url(speedtestEvidence.src)}
+                  alt={`${brand.name} 2026-08-11 节点测速截图，包含节点地区、协议(${speedtestEvidence.protocolDisplayed})、延迟和速度结果。`}
+                  width="1122"
+                  height="1402"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="evidence-caption">
+                <strong>测速批次归档说明：</strong>{speedtestEvidence.caption}
+                <div class="evidence-meta">
+                  <span>测试时间：{speedtestEvidence.testedAt}</span>
+                  <span>图中协议：{speedtestEvidence.protocolDisplayed}</span>
+                  <span>测试环境：{speedtestEvidence.toolFamily}</span>
+                </div>
+              </figcaption>
+            </figure>
+          )}
+
+          {unlockEvidenceImages && unlockEvidenceImages.length > 0 && (
+            <div class="evidence-unlocks">
+              <h4>2026-08-19 多地区流媒体与 AI 解锁实测图集</h4>
+              <p class="evidence-unlocks__intro">以下为本站保留的 {brand.name} 多区域流媒体（Netflix / Disney+ / YouTube）与网络拓扑实测截图：</p>
+              <div class="evidence-unlocks__grid">
+                {unlockEvidenceImages.map((imgSrc, idx) => (
+                  <figure class="evidence-unlock-item">
+                    <img
+                      src={url(imgSrc)}
+                      alt={`${brand.name} 流媒体与节点实测报告图 0${idx + 1}`}
+                      width="600"
+                      height="600"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption>实测图证 #{idx + 1}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </article>
+    )}
+  </div>
+</section>

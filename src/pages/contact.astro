@@ -11,24 +11,24 @@ import { url } from '../utils/url';
 const { contact } = site;
 const addressLine = `${contact.address.street}, ${contact.address.locality}, ${contact.address.region} ${contact.address.postalCode}, ${contact.address.country}`;
 const crumbs = [
-  { name: 'Home', href: '/' },
-  { name: 'Contact', href: '/contact/' },
+  { name: '首页', href: '/' },
+  { name: '提交收录与纠错', href: '/contact/' },
 ];
 ---
 
 <PageLayout
   seo={{
-    title: 'Contact',
-    description: `Get in touch with ${site.name}: book a free class, ask about memberships or plan a private session.`,
+    title: '提交机场收录、优惠码更新与数据纠错',
+    description: `联系 ${site.name} 编辑部：提交新机场评测申请、更新失效优惠码或反馈节点实测表现。`,
     image: '/media/banners/studio-contact-dusk-gathering.webp',
-    imageAlt: 'A group meditating on blankets on the beach at dusk',
+    imageAlt: '联系免费梯子评测实验室编辑部',
     schema: [businessSchema(Astro.site), breadcrumbSchema(crumbs, Astro.site)],
   }}
   hero={{
     image: { src: '/media/banners/studio-contact-dusk-gathering.webp', alt: '' },
-    title: 'Say Hello',
-    words: [{ text: 'Say' }, { text: 'Hello', serif: true }],
-    lead: 'Questions about classes, memberships or private sessions? Send a note or drop by the studio — we reply within one working day.',
+    title: '联系评测实验室',
+    words: [{ text: '收录申请' }, { text: '数据纠错', serif: true }],
+    lead: '发现某家机场优惠码失效、套餐变更，或希望申请将您的专线品牌纳入实测？欢迎随时与我们联系。',
     breadcrumbs: crumbs,
     imagePosition: 'center 60%',
   }}
@@ -36,29 +36,29 @@ const crumbs = [
   <section class="section" aria-labelledby="contact-details-title">
     <div class="container contact-page">
       <div>
-        <h2 id="contact-details-title">Visit the Studio</h2>
-        <p class="contact-page__intro">Come early for your first class and we will show you around, set you up with a mat and introduce you to your coach.</p>
+        <h2 id="contact-details-title">数据透明与纠错机制</h2>
+        <p class="contact-page__intro">本站所有 42 家机场资料均严格区分「实测截图 (measured)」与「品牌声明 (vendor)」。如您发现价格或状态变动，我们将在 24 小时内复核并更新。</p>
 
         <ul class="contact-list">
           <li>
             <span class="contact-list__icon"><Icon name="mail" size={16} /></span>
-            <div><span class="contact-list__label">Email</span><a class="contact-list__value" href={`mailto:${contact.email}`}>{contact.email}</a></div>
+            <div><span class="contact-list__label">编辑部邮箱</span><a class="contact-list__value" href={`mailto:${contact.email}`}>{contact.email}</a></div>
           </li>
           <li>
             <span class="contact-list__icon"><Icon name="phone" size={16} /></span>
-            <div><span class="contact-list__label">Phone</span><a class="contact-list__value" href={`tel:${contact.phoneHref}`}>{phoneText(contact.phone)}</a></div>
+            <div><span class="contact-list__label">商务联络</span><a class="contact-list__value" href={`tel:${contact.phoneHref}`}>{phoneText(contact.phone)}</a></div>
           </li>
           <li>
             <span class="contact-list__icon"><Icon name="pin" size={16} /></span>
             <div>
-              <span class="contact-list__label">Studio</span>
-              <address class="contact-list__value">{contact.address.street}<br />{contact.address.locality}, {contact.address.region} {contact.address.postalCode}, {contact.address.country}</address>
+              <span class="contact-list__label">测速后端节点</span>
+              <address class="contact-list__value">{contact.address.street}<br />{contact.address.locality}, {contact.address.region}</address>
             </div>
           </li>
         </ul>
 
         <div class="contact-block">
-          <h3 class="contact-block__title">Opening Hours</h3>
+          <h3 class="contact-block__title">实验室巡检时间</h3>
           <ul class="hours">
             {site.hours.map((row) => <li><span>{row.label}</span><span>{row.hours}</span></li>)}
           </ul>
@@ -66,7 +66,7 @@ const crumbs = [
 
         {site.socials.length > 0 && (
           <div class="contact-block">
-            <h3 class="contact-block__title">Explore</h3>
+            <h3 class="contact-block__title">快捷入口</h3>
             <ul class="footer__social">
               {site.socials.map((social) => (
                 <li><a href={url(social.href)} aria-label={social.label}><Icon name={social.icon} size={16} /></a></li>
@@ -78,7 +78,7 @@ const crumbs = [
         <div class="map-card">
           <span class="map-card__pin"><Icon name="pin" size={18} /></span>
           <p>{addressLine}</p>
-          <a class="link-arrow" href="#contact-form">Schedule a Studio Tour <Icon name="arrow-up" size={14} /></a>
+          <a class="link-arrow" href="#contact-form">在线提交信息反馈 <Icon name="arrow-up" size={14} /></a>
         </div>
       </div>
 

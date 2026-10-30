@@ -47,14 +47,14 @@ const action = site.forms.newsletterAction;
       if (!input.value || !input.checkValidity()) {
         event.preventDefault();
         input.setAttribute('aria-invalid', 'true');
-        msg.textContent = 'Please enter a valid email address.';
+        msg.textContent = '请输入有效的邮箱地址。';
         input.focus();
         return;
       }
       input.removeAttribute('aria-invalid');
       if (!form.getAttribute('action')) {
         event.preventDefault();
-        msg.textContent = 'Thank you for subscribing! Check your inbox this Sunday for your weekly practice note.';
+        msg.textContent = '订阅成功！当 42 家机场优惠码或域名更新时，我们将第一时间发送至您的邮箱。';
         input.value = '';
       }
     });

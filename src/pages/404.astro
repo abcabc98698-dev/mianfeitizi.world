@@ -4,18 +4,18 @@ import PageHero from '../components/PageHero.astro';
 import Button from '../components/Button.astro';
 ---
 
-<BaseLayout title="Page not found" description="The page you were looking for could not be found." noindex>
+<BaseLayout title="页面未找到 (404)" description="您访问的页面不存在或已迁移。" noindex>
   <PageHero
     full
     image={{ src: '/media/banners/mountain-cloud-sea-404-hero.webp', alt: '' }}
     eyebrow="404"
-    title="Off the Mat"
-    words={[{ text: 'Off the' }, { text: 'Mat', serif: true }]}
-    lead="Take a breath. This page wandered off the mat — it may have moved, or the link might be mistyped."
+    title="节点迷航"
+    words={[{ text: '路由' }, { text: '未找到', serif: true }]}
+    lead="您访问的链接可能已调整。不妨直接返回首页或前往 42 家机场评测库查找最新节点资料。"
   >
     <div class="page-hero__actions">
-      <Button href="/" variant="light">Back to Home</Button>
-      <Button href="/contact/" variant="glass">Contact the Studio</Button>
+      <Button href="/" variant="light">返回网站首页</Button>
+      <Button href="/brands/" variant="glass">查看 42 家机场库</Button>
     </div>
   </PageHero>
 </BaseLayout>

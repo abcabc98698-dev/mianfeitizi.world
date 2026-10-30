@@ -1,17 +1,18 @@
 const WORDS_PER_MINUTE = 220;
 
-/** Estimated reading time in minutes for a Markdown body. */
+/** Estimated reading time in minutes for a Markdown body (supports Chinese & English). */
 export function readingTime(text = ''): number {
-  const words = text
+  const clean = text
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/[#>*_`~\-[\]()!]/g, ' ')
-    .split(/\s+/)
-    .filter(Boolean).length;
-  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+    .replace(/[#>*_`~\-[\]()!]/g, ' ');
+  const cjkChars = (clean.match(/[\u4e00-\u9fa5]/g) ?? []).length;
+  const words = clean.split(/\s+/).filter(Boolean).length;
+  const totalUnits = cjkChars > words ? Math.ceil(cjkChars / 320) : Math.ceil(words / WORDS_PER_MINUTE);
+  return Math.max(2, totalUnits);
 }
 
-export function formatDate(date: Date, locale = 'en-US'): string {
+export function formatDate(date: Date, locale = 'zh-CN'): string {
   return date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
 

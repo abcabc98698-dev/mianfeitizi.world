@@ -1,0 +1,266 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { getFreeTrialBrands, getBudgetYearlyBrands, getUnlimitedDurationBrands } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL, AFFILIATE_DISCLOSURE } from '../../data/links';
+import { breadcrumbSchema, faqPageSchema, itemListSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+
+const freeTrialBrands = getFreeTrialBrands();
+const budgetBrands = getBudgetYearlyBrands().slice(0, 8);
+const unlimitedBrands = getUnlimitedDurationBrands().slice(0, 6);
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '免费梯子与平价替代专题', href: '/free-nodes/' },
+];
+
+const freeFaqs = [
+  {
+    question: '2026年还有真正安全、好用的「免费梯子」吗？',
+    answer:
+      '如果是指「不明来源的永久免费 VPN App」或「电报群里所有人共用的免费 SSR/VMess 节点」，我们强烈建议远离——这类节点不仅晚高峰丢包率超过 80%，更普遍存在注入广告、嗅探 Cookie 和导致 ChatGPT/Google 账号被封禁的风险。真正安全零成本的做法是：使用正规专线机场提供的「新用户免费试用」（如宇宙云、极连云、一翻云、闪跃、神行加速均支持免费试用），先白嫖验证速度，满意后再决定去留。',
+  },
+  {
+    question: '如果不想冒免费节点的风险，最便宜的正规专线梯子一个月要多少钱？',
+    answer:
+      '比绝大多数人想象的都要便宜！2026 年正规 IEPL 专线机场的年付小包已经下探到每月 5.1 元至 8.2 元区间（相当于每天不到 2 到 3 毛钱）：例如 TOP 1 光速云轻量版仅 99 元/年（每月 69GB，折合 8.25 元/月，可用 9 折码 AMM）；TOP 4 飞猫云学生版 84 元/年（折后约 6.3 元/月，自带客户端）；TOP 5 大佬云更是低至约 68 元/年（折合 5.6 元/月）。',
+  },
+  {
+    question: '我平时翻墙次数很少，买包月套餐觉得浪费，有什么替代免费梯子的方案？',
+    answer:
+      '最适合低频用户的方案是「按量计费、永久不过期的不限时流量包」！例如光速云的「致敬斯诺克147永久套餐」（147元一次性买断 247GB 永久流量，每 GB 仅 0.59 元）、Firefly 萤火虫的 100元/100GB 不限时包（用 8 折码 firefly 后仅需 80 元）、以及二猫云的 99元/100GB 不限时包（用 88 折码 ermao5555 后约 87 元）。买一次可以用上一两年，彻底告别月租浪费。',
+  },
+];
+---
+
+<PageLayout
+  seo={{
+    title: '2026免费梯子避坑指南 | 6家支持免费试用的正规机场与5-8元/月IEPL安全平替',
+    description:
+      '深度拆解永久免费梯子与公益节点的四大安全隐患，汇总 2026 年真正支持新用户免费试用的 6 家正规专线机场（宇宙云、极连云等）及光速云 99元/年（8元/月）高性价比平替方案。',
+    image: '/media/immersions/coastal-cliff-reset-weekend.webp',
+    imageAlt: '2026免费梯子真相、免费试用机场与百元内安全平替指南',
+    schema: [
+      breadcrumbSchema(crumbs, Astro.site),
+      faqPageSchema(freeFaqs),
+      itemListSchema(
+        '2026支持新用户免费试用的正规专线机场清单',
+        '先免费测试本地网络延迟与解锁效果，零试错成本的正规机场推荐',
+        freeTrialBrands.map((b, i) => ({
+          name: b.name,
+          url: `/brands/${b.slug}/`,
+          description: b.tagline,
+          position: i + 1,
+        })),
+        Astro.site,
+      ),
+    ],
+  }}
+  hero={{
+    image: { src: '/media/immersions/coastal-cliff-reset-weekend.webp', alt: '' },
+    eyebrow: 'FREE LADDER & BUDGET ALTERNATIVES · 免费梯子安全实验室',
+    title: '免费梯子真相与安全平替',
+    words: [{ text: '免费梯子' }, { text: '安全平替指南', serif: true }],
+    lead: '为什么「永久免费 VPN」往往是最昂贵的陷阱？我们为您梳理了 6 家提供正规免费试用的 IEPL 专线机场，以及每天仅需 2 毛钱的百元内年付/永久流量包方案。',
+    breadcrumbs: crumbs,
+  }}
+>
+  <!-- 第一部分：免费梯子四大风险 vs 正规平替对比 -->
+  <section class="section" aria-labelledby="risk-title">
+    <div class="container">
+      <div class="compliance-banner">
+        <p>{AFFILIATE_DISCLOSURE}</p>
+      </div>
+
+      <SectionHeading
+        id="risk-title"
+        title="「野生免费梯子」vs「百元内正规 IEPL 专线」核心差异"
+        intro="跨境服务器与带宽每一秒都在产生高昂成本。当一款工具向您宣称「永久免费且无限流量」时，您自己往往就成了被出售的商品。"
+      />
+
+      <div class="pros-cons-grid">
+        <div class="review-box review-box--cons">
+          <h3>警惕：野生永久免费 VPN / 公共节点的 4 大隐患</h3>
+          <ul>
+            <li><span class="bullet-warn">!</span><span><strong>隐私与凭证嗅探：</strong>恶意免费节点可轻易截获未加密流量、注入广告脚本，甚至盗取跨境卖家后台与加密钱包会话。</span></li>
+            <li><span class="bullet-warn">!</span><span><strong>万人骑黑名单 IP：</strong>数万人共用同一个免费出口 IP，访问 Google 逢搜必弹验证码，登录 ChatGPT / Claude 极易触发秒封号。</span></li>
+            <li><span class="bullet-warn">!</span><span><strong>设备沦为肉鸡代理池：</strong>多款知名免费 VPN 曾被安全机构曝光在后台静默共享用户家庭宽带作为商业爬虫出口。</span></li>
+            <li><span class="bullet-warn">!</span><span><strong>晚高峰彻底瘫痪：</strong>公网直连裸奔线路，每晚 20:00–23:00 丢包率高达 70% 以上，连基本的网页图片都无法加载。</span></li>
+          </ul>
+        </div>
+
+        <div class="review-box review-box--pros">
+          <h3>正解：2026 聪明用户的 3 种「零风险/微成本」科学上网姿势</h3>
+          <ul>
+            <li><Icon name="check" size={16} /><span><strong>姿势一（¥0 正规免费试用）：</strong>注册支持 2 小时免费试用的正规专线机场（如宇宙云、极连云、一翻云），用真专线完成应急需求或测速验证。</span></li>
+            <li><Icon name="check" size={16} /><span><strong>姿势二（每天不到 0.25 元的百元年付包）：</strong>选择 TOP 1 光速云 99元/年（折合 8.2元/月）、飞猫云 84元/年（折后 6.3元/月）或大佬云 68元/年（5.6元/月），一杯奶茶钱换一整年 IEPL 专线。</span></li>
+            <li><Icon name="check" size={16} /><span><strong>姿势三（一次买断永不过期流量包）：</strong>如果平时很少翻墙，直接入手光速云 147元/247GB 永久包或 Firefly 折后 80元/100GB 永久包，用多少扣多少，三年都不怕过期。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二部分：6家支持正规免费试用的机场 -->
+  <section class="section section--mist" id="free-trials" aria-labelledby="free-trials-title">
+    <div class="container">
+      <SectionHeading
+        id="free-trials-title"
+        title="01 / 支持「新用户免费试用」的 6 家正规专线机场"
+        intro="想先不花一分钱测试本地宽带连接效果？以下 6 家机场在品牌资料中明确提供新用户免费试用通道，先白嫖测速，满意再决定是否留用。"
+      />
+
+      <div class="brand-cards-grid">
+        {freeTrialBrands.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          return (
+            <article class="brand-dir-card brand-dir-card--featured">
+              <div class="brand-dir-card__top">
+                <div class="brand-dir-card__badges">
+                  <span class="rank-chip">#{brand.rank}</span>
+                  <span class="tag">{brand.freeTrialNote ?? '支持免费试用'}</span>
+                </div>
+                {brand.speedtestEvidence && <span class="mini-status mini-status--measured">含实测图</span>}
+              </div>
+
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{brand.tagline}</p>
+
+              <dl class="brand-dir-card__specs">
+                <div>
+                  <dt>核心线路</dt>
+                  <dd>{brand.lineType} ({brand.protocols.join('/')})</dd>
+                </div>
+                <div>
+                  <dt>试用后转正价格</dt>
+                  <dd>{brand.pricingSummary}</dd>
+                </div>
+                <div>
+                  <dt>专属折扣码</dt>
+                  <dd><strong class="coupon-highlight">{link.couponCode} ({link.couponDiscount})</strong></dd>
+                </div>
+              </dl>
+
+              <div class="brand-dir-card__actions">
+                <a
+                  class="btn btn--dark"
+                  href={link.registerUrl}
+                  target="_blank"
+                  rel={AFFILIATE_REL}
+                >
+                  前往注册免费试用 <Icon name="arrow-up" size={14} />
+                </a>
+                <a class="btn btn--line" href={url(`/brands/${brand.slug}/`)}>查看评测</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三部分：百元内年付安全平替（月均 5.1 ~ 8.2 元） -->
+  <section class="section" id="budget-yearly" aria-labelledby="budget-yearly-title">
+    <div class="container">
+      <SectionHeading
+        id="budget-yearly-title"
+        title="02 / 替代免费梯子的「百元内年付 IEPL 专线」（月均 ¥5.1–¥8.2）"
+        intro="与其每天耗费时间寻找随时失效的免费节点，不如用每月 5 到 8 元的零花钱，直接一步到位用上不掉线的 IEPL/IPLC 专线。"
+      >
+        <Button href="/brands/guangsuyun/">查看 TOP 1 光速云详情</Button>
+      </SectionHeading>
+
+      <div class="brand-cards-grid">
+        {budgetBrands.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          return (
+            <article class:list={['brand-dir-card', { 'brand-dir-card--featured': brand.rank <= 5 }]}>
+              <div class="brand-dir-card__top">
+                <span class="rank-chip">#{brand.rank}</span>
+                <span class="tag">月均约 ¥{brand.minMonthlyEquivalent}/月</span>
+              </div>
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{brand.tagline}</p>
+              <dl class="brand-dir-card__specs">
+                <div>
+                  <dt>套餐代表价</dt>
+                  <dd>{brand.pricingSummary}</dd>
+                </div>
+                <div>
+                  <dt>专属优惠码</dt>
+                  <dd><strong class="coupon-highlight">{link.couponCode} ({link.couponDiscount})</strong></dd>
+                </div>
+              </dl>
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={url(`/brands/${brand.slug}/`)}>查看深度评测</a>
+                <a class="btn btn--line" href={link.registerUrl} target="_blank" rel={AFFILIATE_REL}>官网直达</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 第四部分：永久不限时流量包精选 -->
+  <section class="section section--mist" id="unlimited-packs" aria-labelledby="unlimited-packs-title">
+    <div class="container">
+      <SectionHeading
+        id="unlimited-packs-title"
+        title="03 / 低频与备用首选：一次买断「永久不限时流量包」"
+        intro="按量计费、流量永不过期。无论是作为平时查资料的主力，还是搭配包月套餐作为永不失联的「第二备用梯子」，都极具性价比。"
+      />
+
+      <div class="brand-cards-grid">
+        {unlimitedBrands.map((brand) => {
+          const link = getBrandLink(brand.slug);
+          return (
+            <article class="brand-dir-card">
+              <div class="brand-dir-card__top">
+                <span class="rank-chip">#{brand.rank}</span>
+                <span class="tag">永久不过期流量包</span>
+              </div>
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{brand.unlimitedPlanSummary ?? brand.pricingSummary}</p>
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={url(`/brands/${brand.slug}/`)}>了解永久包详情</a>
+                <a class="btn btn--line" href={link.registerUrl} target="_blank" rel={AFFILIATE_REL}>官网购买</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 专题 FAQ -->
+  <section class="section" aria-labelledby="free-faq-title">
+    <div class="container faq">
+      <div class="faq__intro">
+        <h2 id="free-faq-title">免费梯子与低成本选型问答</h2>
+        <p>帮助您在安全性、连接速度与预算成本之间找到最佳平衡点。</p>
+        <Button href="/clients/">查看代理客户端下载指南</Button>
+      </div>
+      <div class="faq__list">
+        {freeFaqs.map((item, i) => (
+          <details open={i === 0}>
+            <summary>{item.question}<span class="faq__icon" aria-hidden="true"><Icon name="plus" size={14} /></span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>

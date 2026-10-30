@@ -13,24 +13,24 @@ const posts = await getPosts();
 const [featured, ...rest] = posts;
 const categories = [...new Set(posts.map((p) => p.data.category))];
 const crumbs = [
-  { name: 'Home', href: '/' },
-  { name: 'Journal', href: '/journal/' },
+  { name: '首页', href: '/' },
+  { name: '深度评测专栏', href: '/journal/' },
 ];
 ---
 
 <PageLayout
   seo={{
-    title: 'Journal',
-    description: 'Practical notes from our coaches on yoga, breathwork, mobility and building habits that last.',
+    title: '科学上网深度评测与教程专栏',
+    description: '涵盖 2026 免费梯子安全分析、IEPL 专线机场选型、ChatGPT 与 Netflix 4K 解锁攻略及全平台代理客户端配置教程。',
     image: '/media/banners/journal-editorial-stones-hero.webp',
-    imageAlt: 'Two smooth stones balanced on a mossy ledge in warm light',
+    imageAlt: '科学上网深度评测与客户端配置教程专栏',
     schema: [breadcrumbSchema(crumbs, Astro.site)],
   }}
   hero={{
     image: { src: '/media/banners/journal-editorial-stones-hero.webp', alt: '' },
-    title: 'The Journal',
-    words: [{ text: 'The' }, { text: 'Journal', serif: true }],
-    lead: 'Practical notes from our coaches on movement, breath and building habits that last.',
+    title: '深度评测专栏',
+    words: [{ text: '深度评测' }, { text: '技术专栏', serif: true }],
+    lead: '从免费梯子避坑指南、IEPL/IPLC 物理专线拆解，到 ChatGPT 解锁与客户端进阶分流配置。',
     breadcrumbs: crumbs,
   }}
 >
@@ -38,21 +38,21 @@ const crumbs = [
     <>
       <section class="section" aria-labelledby="featured-title">
         <div class="container">
-          <h2 class="sr-only" id="featured-title">Latest article</h2>
+          <h2 class="sr-only" id="featured-title">置顶深度文章</h2>
           <a class="post post-feature" href={url(`/journal/${featured.id}/`)}>
             <div class="post__media">
               <img src={url(featured.data.image)} alt={featured.data.imageAlt} width="1600" height="1000" loading="eager" decoding="async" />
             </div>
             <div>
               <div class="post__meta">
-                <span>Latest</span>
+                <span>最新精选</span>
                 <span>{featured.data.category}</span>
-                <span>{postMinutes(featured)} min read</span>
+                <span>约 {postMinutes(featured)} 分钟阅读</span>
                 <time datetime={featured.data.pubDate.toISOString()}>{formatDate(featured.data.pubDate)}</time>
               </div>
               <h3>{featured.data.title}</h3>
               <p class="post-feature__excerpt">{featured.data.description}</p>
-              <span class="link-arrow">Read article <Icon name="arrow-up" size={14} /></span>
+              <span class="link-arrow">阅读完整评测 <Icon name="arrow-up" size={14} /></span>
             </div>
           </a>
         </div>
@@ -61,8 +61,8 @@ const crumbs = [
       {rest.length > 0 && (
         <section class="section section--mist" aria-labelledby="all-posts-title">
           <div class="container">
-            <SectionHeading id="all-posts-title" title="All Articles" intro="Short, practical reads you can put to use on the mat or off it.">
-              <ul class="topics" aria-label="Topics">
+            <SectionHeading id="all-posts-title" title="全部专题文章" intro="每一篇均结合真实节点测试与 2026 最新协议生态撰写。">
+              <ul class="topics" aria-label="专题分类">
                 {categories.map((category) => <li><span class="tag">{category}</span></li>)}
               </ul>
             </SectionHeading>
@@ -76,7 +76,7 @@ const crumbs = [
   ) : (
     <section class="section">
       <div class="container">
-        <p>New studio journal articles are arriving soon.</p>
+        <p>深度评测文章正在更新中。</p>
       </div>
     </section>
   )}

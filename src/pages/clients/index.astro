@@ -1,0 +1,228 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { clientPlatforms } from '../../data/clients';
+import { getCustomClientBrands } from '../../data/brands';
+import { breadcrumbSchema, faqPageSchema, itemListSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+
+const customClientBrands = getCustomClientBrands();
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '全平台代理客户端大全', href: '/clients/' },
+];
+
+const clientFaqs = [
+  {
+    question: '为什么我导入光速云或微风网络的订阅后，老版 Clash for Windows / Clash for Android 报错或刷不出节点？',
+    answer:
+      '因为 2026 年主流一线专线机场（如光速云、微风网络、大佬云、宇宙云等）均已升级采用抗封锁能力更强的新一代 VLESS 协议，而早在 2023 年停更的原版 Clash for Windows (CFW)、Clash for Android (CFA) 和 ClashX 的旧内核根本不认识 VLESS 协议！解决方法非常简单：请卸载旧软件，改用本页推荐的搭载 Mihomo (Clash.Meta) 或 Xray/sing-box 内核的现代客户端——电脑端装 Clash Verge Rev、FlClash 或 v2rayN，安卓装 FlClash 或 v2rayNG，即可瞬间刷出全部节点。',
+  },
+  {
+    question: 'iPhone / iPad 用户没有美区 Apple ID 绑卡买 Shadowrocket（小火箭）怎么办？',
+    answer:
+      '有两个零成本解决方案：第一，您只需注册一个免费的美区或港区 Apple ID（无需绑定信用卡），登录 App Store 即可直接免费下载开源无广告的 Karing 或 sing-box (SFI)，它们同样完美支持 VLESS 与多机场订阅导入；第二，部分机场官网后台会为付费会员提供共享美区 Apple ID 借用下载教程。',
+  },
+  {
+    question: '什么是「系统代理 (System Proxy)」和「TUN 虚拟网卡模式」？我该开哪个？',
+    answer:
+      '日常使用 Chrome / Edge 浏览器看 YouTube、用网页版 ChatGPT 时，只需开启「系统代理」即可，资源占用最低；但如果您需要使用桌面端软件（如 Cursor 编程编辑器、Claude 桌面端、Telegram 客户端、Git 命令行拉取代码或 PC 端外服游戏），这些程序往往不遵循浏览器系统代理设置，此时只需在 Clash Verge Rev、FlClash 或 v2rayN 中打开「TUN 模式」，即可由虚拟网卡接管全系统所有软件流量。',
+  },
+];
+---
+
+<PageLayout
+  seo={{
+    title: '2026科学上网代理客户端下载与配置大全 | Clash Verge Rev / FlClash / v2rayN / 小火箭官方源',
+    description:
+      '全网最全的六大系统科学上网第三方代理客户端官方下载与三步配置指南：涵盖 Windows、Android、iOS (iPhone/iPad)、macOS (M1-M4)、Linux 与 OpenWrt 软路由，完美支持 VLESS / Trojan / Shadowsocks 专线订阅。',
+    image: '/media/immersions/alpine-summit-new-year-retreat.webp',
+    imageAlt: '2026全平台代理客户端下载与订阅导入教程',
+    schema: [
+      breadcrumbSchema(crumbs, Astro.site),
+      faqPageSchema(clientFaqs),
+      itemListSchema(
+        '2026全平台科学上网代理客户端推荐清单',
+        '覆盖 Windows、Android、iOS、macOS、Linux 与 OpenWrt 的开源官方客户端目录',
+        clientPlatforms.flatMap((g) => g.clients).map((c, idx) => ({
+          name: `${c.name} (${c.platformId.toUpperCase()})`,
+          url: `/clients/#${c.platformId}`,
+          description: c.summary,
+          position: idx + 1,
+        })),
+        Astro.site,
+      ),
+    ],
+  }}
+  hero={{
+    image: { src: '/media/immersions/alpine-summit-new-year-retreat.webp', alt: '' },
+    eyebrow: 'PROXY CLIENTS HUB · WIN / ANDROID / IOS / MAC / LINUX / OPENWRT',
+    title: '全平台代理客户端大全',
+    words: [{ text: '代理客户端' }, { text: '官方下载与教程', serif: true }],
+    lead: '好马配好鞍：严选支持新一代 VLESS、Trojan、Shadowsocks 与 Hysteria2 协议的正版开源客户端，提供 GitHub / App Store 官方直链与三步导入订阅教程。',
+    breadcrumbs: crumbs,
+  }}
+>
+  <Fragment slot="hero">
+    <div class="page-hero__actions">
+      {clientPlatforms.map((p) => (
+        <Button href={`#${p.id}`} variant="glass">{p.shortName}</Button>
+      ))}
+    </div>
+  </Fragment>
+
+  <!-- 快速平台导航与核心避坑提示 -->
+  <section class="section" aria-labelledby="client-quickstart-title">
+    <div class="container">
+      <SectionHeading
+        id="client-quickstart-title"
+        title="六大操作系统首选客户端一图速查"
+        intro="请认准本页提供的 GitHub Releases 与 Apple App Store 官方地址下载，切勿从百度搜索竞价广告或来路不明的第三方下载站获取安装包。"
+      >
+        <Button href="/brands/guangsuyun/">还没有节点？获取光速云订阅</Button>
+      </SectionHeading>
+
+      <div class="platform-jump-grid">
+        {clientPlatforms.map((p) => (
+          <a class="platform-jump-card" href={`#${p.id}`}>
+            <span class="tag">{p.shortName}</span>
+            <h3>{p.name}</h3>
+            <p><strong>主力推荐：</strong>{p.topPick}</p>
+            <span class="link-arrow">查看下载与三步教程 <Icon name="arrow-up" size={14} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 分平台详细客户端列表 -->
+  {clientPlatforms.map((group, idx) => (
+    <section
+      class:list={['section', { 'section--mist': idx % 2 === 0 }]}
+      id={group.id}
+      aria-labelledby={`title-${group.id}`}
+    >
+      <div class="container">
+        <SectionHeading
+          id={`title-${group.id}`}
+          title={`${String(idx + 1).padStart(2, '0')} / ${group.name}`}
+          intro={group.subtitle}
+        >
+          <span class="tag">首选：{group.topPick}</span>
+        </SectionHeading>
+
+        <div class="client-cards-grid">
+          {group.clients.map((client) => (
+            <article class:list={['client-card', { 'client-card--recommended': client.status === 'recommended' }]}>
+              <div class="client-card__head">
+                <div>
+                  <span class:list={['mini-status', client.status === 'recommended' ? 'mini-status--measured' : client.status === 'caution' ? 'mini-status--historical' : 'mini-status--vendor']}>
+                    {client.badge}
+                  </span>
+                  <h3>{client.name}</h3>
+                </div>
+                <a
+                  class="btn btn--dark btn--sm"
+                  href={client.downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {client.downloadLabel} <Icon name="arrow-up" size={13} />
+                </a>
+              </div>
+
+              <p class="client-card__summary">{client.summary}</p>
+
+              <div class="client-card__meta">
+                <div><strong>搭载内核：</strong>{client.kernel}</div>
+                <div><strong>支持协议：</strong>{client.protocols.join(' / ')}</div>
+                <div><strong>安装包选型：</strong>{client.architectureNote}</div>
+              </div>
+
+              {client.warningNote && (
+                <div class="client-warning">
+                  <strong>重要提示：</strong>{client.warningNote}
+                </div>
+              )}
+
+              <div class="client-card__cols">
+                <div>
+                  <h4>核心优势</h4>
+                  <ul class="client-list">
+                    {client.pros.map((pro) => (
+                      <li><Icon name="check" size={14} /><span>{pro}</span></li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4>三步配置教程</h4>
+                  <ol class="client-steps">
+                    {client.setupSteps.map((step) => (
+                      <li>{step}</li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- 自带官方一键客户端的机场推荐 -->
+  <section class="section" id="custom-client-brands" aria-labelledby="custom-client-title">
+    <div class="container">
+      <SectionHeading
+        id="custom-client-title"
+        title="不想折腾第三方客户端？这 15 家机场自带「官方一键客户端」"
+        intro="如果您觉得下载 GitHub 开源客户端、复制粘贴订阅链接还是太麻烦，以下机场均提供自研专属客户端——下载安装后输入注册邮箱与密码即可一键连接。"
+      >
+        <Button href="/brands/" variant="line">查看全部 42 家机场</Button>
+      </SectionHeading>
+
+      <div class="brand-cards-grid">
+        {customClientBrands.slice(0, 8).map((brand) => (
+          <article class="brand-dir-card">
+            <div class="brand-dir-card__top">
+              <span class="rank-chip">#{brand.rank}</span>
+              <span class="tag">自带专属客户端</span>
+            </div>
+            <h3 class="brand-dir-card__title">
+              <a href={url(`/brands/${brand.slug}/`)}>{brand.name}</a>
+            </h3>
+            <p class="brand-dir-card__tagline">{brand.tagline}</p>
+            <div class="brand-dir-card__actions">
+              <a class="btn btn--dark" href={url(`/brands/${brand.slug}/`)}>查看客户端与套餐评测</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 客户端 FAQ -->
+  <section class="section section--mist" aria-labelledby="client-faq-title">
+    <div class="container faq">
+      <div class="faq__intro">
+        <h2 id="client-faq-title">客户端排错与进阶设置问答</h2>
+        <p>解决订阅导入失败、VLESS 协议报错与桌面软件不走代理等高频疑难杂症。</p>
+        <Button href="/brands/guangsuyun/">搭配 TOP 1 光速云实测</Button>
+      </div>
+      <div class="faq__list">
+        {clientFaqs.map((item, i) => (
+          <details open={i === 0}>
+            <summary>{item.question}<span class="faq__icon" aria-hidden="true"><Icon name="plus" size={14} /></span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>

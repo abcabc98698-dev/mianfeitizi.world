@@ -32,32 +32,16 @@ export function businessSchema(siteUrl: URL | undefined): Json {
   const rootUrl = absoluteUrl('/', siteUrl);
   return {
     '@context': 'https://schema.org',
-    '@type': 'HealthAndBeautyBusiness',
-    '@id': `${rootUrl}#studio`,
+    '@type': 'Organization',
+    '@id': `${rootUrl}#organization`,
     name: site.name,
     description: site.description,
     url: rootUrl,
     image: absoluteUrl(site.seo.ogImage, siteUrl),
     email: contact.email,
-    telephone: contact.phoneHref,
-    priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: contact.address.street,
-      addressLocality: contact.address.locality,
-      addressRegion: contact.address.region,
-      postalCode: contact.address.postalCode,
-      addressCountry: contact.address.country,
-    },
-    openingHoursSpecification: site.hours.map((row) => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: row.days,
-      opens: row.opens,
-      closes: row.closes,
-    })),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Studio Yoga & Breathwork Sessions',
+      name: '2026 科学上网专线机场与客户端评测矩阵',
       itemListElement: classes.map((c) => ({
         '@type': 'Offer',
         itemOffered: {
@@ -70,17 +54,40 @@ export function businessSchema(siteUrl: URL | undefined): Json {
   };
 }
 
-export function faqPageSchema(): Json {
+export function faqPageSchema(customFaqs?: Array<{ question: string; answer: string }>): Json {
+  const list = customFaqs ?? faqs;
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((item) => ({
+    mainEntity: list.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
         '@type': 'Answer',
         text: item.answer,
       },
+    })),
+  };
+}
+
+export function itemListSchema(
+  title: string,
+  description: string,
+  items: Array<{ name: string; url: string; description?: string; position?: number }>,
+  siteUrl: URL | undefined,
+): Json {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: title,
+    description,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: item.position ?? idx + 1,
+      name: item.name,
+      description: item.description,
+      url: absoluteUrl(item.url, siteUrl),
     })),
   };
 }
@@ -125,7 +132,7 @@ export function blogPostingSchema(
     ...(post.category ? { articleSection: post.category } : {}),
     ...(post.tags && post.tags.length > 0 ? { keywords: post.tags.join(', ') } : {}),
     ...(post.minutes ? { timeRequired: `PT${post.minutes}M` } : {}),
-    author: { '@type': 'Person', name: post.author },
+    author: { '@type': 'Organization', name: post.author },
     publisher: {
       '@type': 'Organization',
       name: site.name,

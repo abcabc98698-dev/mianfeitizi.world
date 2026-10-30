@@ -20,8 +20,8 @@ const { title, description, image, imageAlt, author, category, tags, pubDate, up
 const minutes = postMinutes(post);
 const path = `/journal/${post.id}/`;
 const crumbs = [
-  { name: 'Home', href: '/' },
-  { name: 'Journal', href: '/journal/' },
+  { name: '首页', href: '/' },
+  { name: '深度评测专栏', href: '/journal/' },
   { name: title, href: path },
 ];
 ---
@@ -47,8 +47,8 @@ const crumbs = [
       <div class="page-hero__meta">
         <span class="tag tag--glass">{category}</span>
         <span><Icon name="calendar" size={14} /><time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time></span>
-        <span><Icon name="clock" size={14} />{minutes} min read</span>
-        <span>By {author}</span>
+        <span><Icon name="clock" size={14} />约 {minutes} 分钟阅读</span>
+        <span>作者：{author}</span>
       </div>
     </PageHero>
     <div class="article container">
@@ -57,11 +57,11 @@ const crumbs = [
       </div>
       <footer class="article__footer">
         {tags.length > 0 && (
-          <ul class="article__tags" aria-label="Tags">
+          <ul class="article__tags" aria-label="文章标签">
             {tags.map((tag) => <li><span class="tag">#{tag}</span></li>)}
           </ul>
         )}
-        <a class="link-arrow" href={url('/journal/')}>All articles <Icon name="arrow-up" size={14} /></a>
+        <a class="link-arrow" href={url('/journal/')}>返回全部专栏文章 <Icon name="arrow-up" size={14} /></a>
       </footer>
     </div>
   </article>
@@ -69,7 +69,7 @@ const crumbs = [
   {related.length > 0 && (
     <section class="section" aria-labelledby="related-title">
       <div class="container">
-        <SectionHeading id="related-title" title="Keep Reading" />
+        <SectionHeading id="related-title" title="延伸阅读推荐" />
         <div class="journal">
           {related.map((item) => <PostCard post={item} />)}
         </div>

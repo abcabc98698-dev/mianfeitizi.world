@@ -21,7 +21,7 @@ const { title, description, category, image, imageAlt, pubDate } = post.data;
   </div>
   <div class="post__meta">
     <span>{category}</span>
-    <span>{postMinutes(post)} min read</span>
+    <span>约 {postMinutes(post)} 分钟阅读</span>
     {showDate && <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>}
   </div>
   <Heading>{title}</Heading>

@@ -1,49 +1,49 @@
 import type { SiteConfig } from '../types';
 
 export const site: SiteConfig = {
-  name: 'Yoga Fitness',
-  logoText: 'yogafitness',
-  tagline: 'Mindful movement, breathwork & restorative yoga studio',
+  name: '免费梯子 · MianFeiTiZi.World',
+  logoText: 'mianfeitizi',
+  tagline: '2026 免费梯子避坑指南、42家专线机场实测与全平台代理客户端导航',
   description:
-    'Yoga Fitness offers guided vinyasa, hatha, yin restorative classes, pranayama breathwork labs and seasonal retreats for every level of practice.',
+    '免费梯子（mianfeitizi.world）专注 2026 科学上网节点评测、免费梯子风险甄别与百元内高性价比 IEPL 专线机场推荐。收录光速云、微风网络、暮光加速、飞猫云等 42 家机场真实测速图档、优惠码及 Clash / Shadowrocket / v2rayN 全平台客户端教程。',
   footerAbout:
-    'A neighborhood sanctuary for mindful movement, steady breath and a supportive community dedicated to lifelong wellbeing.',
-  lang: 'en',
-  locale: 'en_US',
+    '独立客观的科学上网与跨境网络评测实验室。严格区分 2026 实测节点图档与品牌官方资料，助您避开高风险伪免费陷阱，用最低成本获得稳定的 IEPL/IPLC 专线体验。',
+  lang: 'zh-CN',
+  locale: 'zh_CN',
 
   contact: {
     email: 'hello@mianfeitizi.world',
-    phone: '+1 (415) 890-4321',
-    phoneHref: '+14158904321',
+    phone: '+852 3008-5688',
+    phoneHref: '+85230085688',
     address: {
-      street: '428 Valencia Street, Suite 2B',
-      locality: 'San Francisco',
-      region: 'CA',
-      postalCode: '94103',
-      country: 'USA',
+      street: '亚洲跨境网络测速实验室 · 珠海联通5G/9G测试后端',
+      locality: 'Hong Kong & Zhuhai',
+      region: 'APAC',
+      postalCode: '999077',
+      country: 'CN',
     },
   },
 
   hours: [
     {
-      label: 'Mon to Fri',
-      hours: '6:00 to 21:00',
+      label: '节点连通巡检',
+      hours: '每日 00:00 至 24:00 自动监测',
       days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '06:00',
-      closes: '21:00',
+      opens: '00:00',
+      closes: '23:59',
     },
-    { label: 'Saturday', hours: '7:00 to 18:00', days: ['Saturday'], opens: '07:00', closes: '18:00' },
-    { label: 'Sunday', hours: '8:00 to 14:00', days: ['Sunday'], opens: '08:00', closes: '14:00' },
+    { label: '晚高峰压力抽测', hours: '20:00 至 23:00 (UTC+8)', days: ['Saturday'], opens: '20:00', closes: '23:00' },
+    { label: '优惠码与价格核验', hours: '每周定期复核更新', days: ['Sunday'], opens: '09:00', closes: '21:00' },
   ],
 
   socials: [
-    { label: 'Studio Gallery', href: '/#community-moments', icon: 'camera' },
-    { label: 'Practice Sessions', href: '/#sessions', icon: 'play' },
-    { label: 'Editorial Journal', href: '/journal/', icon: 'globe' },
-    { label: 'Direct Inquiry', href: '/contact/', icon: 'chat' },
+    { label: '42家机场评测库', href: '/brands/', icon: 'globe' },
+    { label: '免费梯子与平替专题', href: '/free-nodes/', icon: 'play' },
+    { label: '全平台客户端大全', href: '/clients/', icon: 'camera' },
+    { label: '提交收录与纠错', href: '/contact/', icon: 'chat' },
   ],
 
-  bookingUrl: '/contact/',
+  bookingUrl: '/brands/guangsuyun/',
 
   forms: {
     contactAction: '',
@@ -51,13 +51,13 @@ export const site: SiteConfig = {
   },
 
   seo: {
-    defaultTitle: 'Yoga Fitness | Mindful Movement, Breathwork & Restorative Yoga Studio',
+    defaultTitle: '免费梯子 (mianfeitizi.world) | 2026科学上网指南、42家IEPL专线机场实测与客户端下载',
     titleSeparator: '|',
     ogImage: '/media/brand/social-share-cover.jpg',
-    ogImageAlt: 'A practitioner meditating cross-legged in a sunlit meadow at dusk',
+    ogImageAlt: '免费梯子 mianfeitizi.world — 42家专线机场实测与代理客户端导航',
     twitterHandle: '',
     themeColor: '#F5F4F1',
   },
 
-  copyright: 'Yoga Fitness Studio. All rights reserved.',
+  copyright: 'mianfeitizi.world (免费梯子评测实验室). 保留所有权利。站内含推广链接，不影响用户购买价格。',
 };

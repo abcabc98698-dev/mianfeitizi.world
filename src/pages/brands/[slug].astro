@@ -1,0 +1,389 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import BrandObservatory from '../../components/BrandObservatory.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import StudioCTA from '../../components/StudioCTA.astro';
+import { brands, getRelatedBrands, type BrandItem } from '../../data/brands';
+import { getBrandLink, AFFILIATE_REL, AFFILIATE_DISCLOSURE } from '../../data/links';
+import { breadcrumbSchema, faqPageSchema, blogPostingSchema } from '../../utils/schema';
+import { url } from '../../utils/url';
+
+export function getStaticPaths() {
+  return brands.map((brand) => ({
+    params: { slug: brand.slug },
+    props: { brand },
+  }));
+}
+
+interface Props {
+  brand: BrandItem;
+}
+
+const { brand } = Astro.props;
+const link = getBrandLink(brand.slug);
+const related = getRelatedBrands(brand, 4);
+const pagePath = `/brands/${brand.slug}/`;
+
+const crumbs = [
+  { name: '首页', href: '/' },
+  { name: '42家机场评测库', href: '/brands/' },
+  { name: `${brand.name} 深度评测`, href: pagePath },
+];
+
+const seoTitle = `${brand.name}怎么样？2026最新优惠码(${link.couponCode ?? '官方折扣'})、套餐价格与${brand.lineType}实测评测`;
+const seoDesc = `${brand.name}（${brand.englishName ?? brand.slug}）2026年深度评测：${brand.tagline}。详细拆解${brand.name}套餐价格、${link.couponCode ? `专属优惠码 ${link.couponCode}、` : ''}流媒体与ChatGPT解锁表现、节点测速图档及客户端配置教程。`;
+---
+
+<PageLayout
+  seo={{
+    title: seoTitle,
+    description: seoDesc,
+    image: brand.coverImage,
+    imageAlt: `${brand.name} 2026 深度评测与节点测速报告`,
+    type: 'article',
+    publishedTime: new Date(`${brand.updatedAt}T08:00:00Z`),
+    modifiedTime: new Date(`${brand.updatedAt}T08:00:00Z`),
+    schema: [
+      breadcrumbSchema(crumbs, Astro.site),
+      faqPageSchema(brand.geoFaqs),
+      blogPostingSchema(
+        {
+          title: seoTitle,
+          description: seoDesc,
+          image: brand.coverImage,
+          author: '免费梯子评测实验室 (mianfeitizi.world)',
+          category: '专线机场深度评测',
+          tags: [brand.name, ...brand.protocols, brand.lineType, '科学上网', '免费梯子平替'],
+          minutes: 6,
+          pubDate: new Date(`${brand.updatedAt}T08:00:00Z`),
+          updatedDate: new Date(`${brand.updatedAt}T08:00:00Z`),
+          path: pagePath,
+        },
+        Astro.site,
+      ),
+    ],
+  }}
+  hero={{
+    image: { src: brand.coverImage, alt: `${brand.name} 评测横幅` },
+    eyebrow: `RANK #${brand.rank} · ${brand.badge} · 核验日期 ${brand.updatedAt}`,
+    title: `${brand.name} 深度评测`,
+    words: [{ text: brand.name }, { text: '深度评测', serif: true }],
+    lead: brand.summary,
+    breadcrumbs: crumbs,
+  }}
+>
+  <Fragment slot="hero">
+    <div class="brand-hero-bar">
+      {link.couponCode && (
+        <div class="brand-hero-coupon">
+          <span>核验优惠码：<strong>{link.couponCode}</strong>（{link.couponDiscount}）</span>
+        </div>
+      )}
+      <div class="page-hero__actions">
+        <a
+          class="btn btn--light"
+          href={link.registerUrl}
+          target="_blank"
+          rel={AFFILIATE_REL}
+        >
+          前往 {brand.name} 官网注册 <Icon name="arrow-up" size={14} />
+        </a>
+        <Button href="#observatory" variant="glass">查看测速与解锁图表</Button>
+        {brand.slug !== 'guangsuyun' && (
+          <Button href="/brands/guangsuyun/" variant="glass">对比 TOP 1 光速云</Button>
+        )}
+      </div>
+    </div>
+  </Fragment>
+
+  <!-- 核心参数总览与合规披露 -->
+  <section class="section" aria-labelledby="spec-overview-title">
+    <div class="container">
+      <div class="compliance-banner">
+        <p>{AFFILIATE_DISCLOSURE}</p>
+      </div>
+
+      <div class="brand-spec-grid">
+        <div class="brand-spec-main">
+          <span class="tag">{brand.tier === 'top10' ? 'TOP 10 年度主力推荐' : brand.tier === 'featured' ? '2026 精选常规批次' : '2026-03 历史评测档案'}</span>
+          <h2 id="spec-overview-title" class="brand-spec-title">{brand.name} 核心技术档案与一句话结论</h2>
+          <p class="brand-spec-lead">{brand.editorialSections.overview}</p>
+
+          <dl class="spec-cards">
+            <div class="spec-card">
+              <dt>创立年份</dt>
+              <dd>{brand.foundedYear}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>核心传输线路</dt>
+              <dd>{brand.lineType}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>支持代理协议</dt>
+              <dd>{brand.protocols.join(' / ')}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>最低月均折算</dt>
+              <dd>约 ¥{brand.minMonthlyEquivalent} / 月起</dd>
+            </div>
+            <div class="spec-card">
+              <dt>免费试用政策</dt>
+              <dd>{brand.hasFreeTrial ? brand.freeTrialNote ?? '支持新用户免费试用' : '无免费试用（建议小额体验）'}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>永久不限时包</dt>
+              <dd>{brand.hasUnlimitedDurationPlan ? brand.unlimitedPlanSummary ?? '支持按量不限时买断' : '仅提供周期订阅套餐'}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>客户端支持</dt>
+              <dd>{brand.hasCustomClient ? '官方一键客户端 + 通用订阅' : 'Clash / 小火箭 / v2ray 通用订阅'}</dd>
+            </div>
+            <div class="spec-card">
+              <dt>数据核验状态</dt>
+              <dd>{brand.dataStatus === 'measured' ? 'Measured (含2026-08-11实测图)' : brand.dataStatus === 'historical' ? 'Historical (2026-03历史档案)' : 'Vendor (2026-10官方资料核验)'}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- 右侧官网直达与优惠码卡片 -->
+        <aside class="brand-cta-box" aria-label="官网注册与优惠码">
+          <div class="brand-cta-box__badge">官方直达通道 · 核验于 {link.verifiedAt}</div>
+          <h3>{brand.name} 专属优惠与入口</h3>
+          <p class="brand-cta-box__sub">{brand.pricingSummary}</p>
+
+          {link.couponCode && (
+            <div class="coupon-box">
+              <span class="coupon-box__label">结账输入优惠码享 {link.couponDiscount}</span>
+              <div class="coupon-box__row">
+                <code id="brand-coupon-code">{link.couponCode}</code>
+                <button
+                  type="button"
+                  class="btn btn--line btn--sm"
+                  data-copy-coupon={link.couponCode}
+                >
+                  复制优惠码
+                </button>
+              </div>
+              {link.couponNote && <small>{link.couponNote}</small>}
+            </div>
+          )}
+
+          <a
+            class="btn btn--dark brand-cta-box__btn"
+            href={link.registerUrl}
+            target="_blank"
+            rel={AFFILIATE_REL}
+          >
+            前往 {brand.name} 官网选购套餐 <Icon name="arrow-up" size={14} />
+          </a>
+
+          <ul class="brand-cta-box__checks">
+            <li><Icon name="check" size={14} />支持 {brand.paymentMethods.join(' / ')} 快捷支付</li>
+            <li><Icon name="check" size={14} />覆盖 {brand.regions.slice(0, 5).join('、')} 等核心节点</li>
+            <li><Icon name="check" size={14} />推荐搭配：{brand.recommendedClients.slice(0, 3).join(' / ')}</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 套餐价格详情表 -->
+  <section class="section section--flush-top" id="plans" aria-labelledby="plans-title">
+    <div class="container">
+      <SectionHeading
+        id="plans-title"
+        title={`${brand.name} 套餐价格与流量规格拆解`}
+        intro={`以下套餐整理自 ${brand.name} 官方资料（核验日期：${brand.updatedAt}）。结账时请记得输入优惠码 ${link.couponCode ?? ''} 减免。`}
+      />
+
+      <div class="plans">
+        {brand.plans.map((p) => (
+          <article class:list={['plan', { 'plan--featured': p.featured }]}>
+            <div class="plan__top">
+              <h3>{p.name}</h3>
+              {p.featured && <span class="tag">主力推荐</span>}
+            </div>
+            <p class="plan__desc">{p.note ?? `${brand.name} 高速专线套餐`}</p>
+            <div class="plan__price">
+              <span class="plan__amount">{p.price}</span>
+              <span class="plan__per">/ {p.period}</span>
+            </div>
+            <ul class="plan__list">
+              <li><Icon name="check" size={16} />流量配额：{p.traffic}</li>
+              <li><Icon name="check" size={16} />峰值速率：{p.speedLimit ?? '不限速'}</li>
+              <li><Icon name="check" size={16} />设备限制：{p.deviceLimit ?? '个人多设备支持'}</li>
+              <li><Icon name="check" size={16} />线路协议：{brand.lineType} ({brand.protocols.join('/')})</li>
+            </ul>
+            <a
+              class:list={['btn', p.featured ? 'btn--light' : 'btn--line']}
+              href={link.registerUrl}
+              target="_blank"
+              rel={AFFILIATE_REL}
+            >
+              前往官网开通此套餐
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 实验室三大图表组件 + 真实测速截图 -->
+  <BrandObservatory brand={brand} />
+
+  <!-- 优缺点、适合人群与深度评测正文 -->
+  <section class="section" id="review-detail" aria-labelledby="review-detail-title">
+    <div class="container">
+      <SectionHeading
+        id="review-detail-title"
+        title={`${brand.name} 优缺点总结与深度评测报告`}
+        intro="从真实用户场景出发，为您客观梳理该品牌的优势亮点、潜在短板、适用人群与防跑路购买策略。"
+      />
+
+      <div class="pros-cons-grid">
+        <div class="review-box review-box--pros">
+          <h3>核心优势亮点 (Pros)</h3>
+          <ul>
+            {brand.pros.map((item) => (
+              <li><Icon name="check" size={16} /><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="review-box review-box--cons">
+          <h3>潜在局限与注意事项 (Cons)</h3>
+          <ul>
+            {brand.cons.map((item) => (
+              <li><span class="bullet-warn" aria-hidden="true">!</span><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="review-box">
+          <h3>非常适合以下人群入手</h3>
+          <ul>
+            {brand.targetUsers.map((item) => (
+              <li><Icon name="check" size={16} /><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="review-box">
+          <h3>不建议以下用户盲目购买</h3>
+          <ul>
+            {brand.notRecommendedFor.map((item) => (
+              <li><span class="bullet-warn" aria-hidden="true">×</span><span>{item}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="editorial-deep-dive prose">
+        <h3>一、线路架构与协议抗封锁能力分析</h3>
+        <p>{brand.editorialSections.lineAndProtocol}</p>
+
+        <h3>二、套餐定价与同价位性价比横向对比</h3>
+        <p>{brand.editorialSections.pricingAnalysis}</p>
+
+        <h3>三、流媒体 4K 观影与 ChatGPT / Claude 解锁表现</h3>
+        <p>{brand.editorialSections.streamingAndAi}</p>
+
+        <h3>四、代理客户端搭配建议与三步导入指南</h3>
+        <p>
+          {brand.hasCustomClient
+            ? `${brand.name} 提供了官方自研专属客户端（${brand.customClientNote ?? '支持输入账号密码一键连接'}），非常适合不想研究第三方配置的新手。同时，其官网后台也完整保留了通用订阅链接，进阶用户依然可以导入 Clash Verge Rev、FlClash、v2rayN 或 Shadowrocket 使用。`
+            : `${brand.name} 采用标准通用订阅下发机制，兼容全部主流第三方代理客户端。为了确保 ${brand.protocols.join(' / ')} 协议发挥最佳性能，我们强烈建议使用搭载 Mihomo (Clash.Meta)、Xray 或 sing-box 最新内核的客户端：`}
+        </p>
+        <ul>
+          <li><strong>Windows / macOS 电脑端：</strong>推荐下载 <a href={url('/clients/#windows')}>Clash Verge Rev</a>、<a href={url('/clients/#windows')}>FlClash</a> 或 <a href={url('/clients/#windows')}>v2rayN</a>，导入订阅后开启「系统代理」或「TUN 虚拟网卡模式」。</li>
+          <li><strong>Android 安卓手机端：</strong>推荐下载 <a href={url('/clients/#android')}>FlClash</a> 或 <a href={url('/clients/#android')}>v2rayNG (arm64-v8a)</a>，切勿使用已停更的老版 Clash for Android。</li>
+          <li><strong>iPhone / iPad (iOS)：</strong>推荐美区 App Store 下载 <a href={url('/clients/#ios')}>Shadowrocket (小火箭)</a>、<a href={url('/clients/#ios')}>Stash</a> 或免费开源的 <a href={url('/clients/#ios')}>Karing</a>。</li>
+        </ul>
+
+        <h3>五、防跑路风控评估与实操购买建议</h3>
+        <p>{brand.editorialSections.riskAndBuyingAdvice}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 品牌专属 GEO FAQ -->
+  <section class="section section--mist" id="brand-faq" aria-labelledby="brand-faq-title">
+    <div class="container faq">
+      <div class="faq__intro">
+        <h2 id="brand-faq-title">{brand.name} 常见问答 (GEO FAQ)</h2>
+        <p>针对搜索用户在选择 {brand.name} 时最常提问的价格、优惠码与客户端配置解答。</p>
+        <a
+          class="btn btn--dark"
+          href={link.registerUrl}
+          target="_blank"
+          rel={AFFILIATE_REL}
+        >
+          前往 {brand.name} 官网
+        </a>
+      </div>
+      <div class="faq__list">
+        {brand.geoFaqs.map((item, i) => (
+          <details open={i === 0}>
+            <summary>{item.question}<span class="faq__icon" aria-hidden="true"><Icon name="plus" size={14} /></span></summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 同梯队关联推荐 -->
+  <section class="section" aria-labelledby="related-brands-title">
+    <div class="container">
+      <SectionHeading
+        id="related-brands-title"
+        title="同梯队热门专线机场对比推荐"
+        intro="货比三家不吃亏：您可以将当前品牌与以下同梯队标杆机场（含 TOP 1 光速云）进行横向对比。"
+      >
+        <Button href="/brands/" variant="line">返回 42 家完整品牌库</Button>
+      </SectionHeading>
+
+      <div class="brand-cards-grid">
+        {related.map((item) => {
+          const rLink = getBrandLink(item.slug);
+          return (
+            <article class="brand-dir-card">
+              <div class="brand-dir-card__top">
+                <span class="rank-chip">#{item.rank}</span>
+                <span class="tag">{item.badge}</span>
+              </div>
+              <h3 class="brand-dir-card__title">
+                <a href={url(`/brands/${item.slug}/`)}>{item.name}</a>
+              </h3>
+              <p class="brand-dir-card__tagline">{item.tagline}</p>
+              <div class="brand-dir-card__actions">
+                <a class="btn btn--dark" href={url(`/brands/${item.slug}/`)}>查看评测</a>
+                <a class="btn btn--line" href={rLink.registerUrl} target="_blank" rel={AFFILIATE_REL}>官网直达</a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <StudioCTA />
+</PageLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-coupon]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const code = btn.dataset.copyCoupon ?? '';
+      if (!code) return;
+      try {
+        await navigator.clipboard.writeText(code);
+        const orig = btn.textContent;
+        btn.textContent = `已复制: ${code}`;
+        window.setTimeout(() => {
+          btn.textContent = orig;
+        }, 2000);
+      } catch {
+        // Fallback if clipboard permission denied
+      }
+    });
+  });
+</script>

@@ -2,28 +2,43 @@ import type { FAQ } from '../types';
 
 export const faqs: FAQ[] = [
   {
-    question: 'I have never done yoga. Which class should I start with?',
+    question: '网上搜索到的「永久免费梯子 / 免费 VPN」安全吗？有哪些潜在风险？',
     answer:
-      'Hatha Foundations and Yin & Restore are ideal first classes. Both move slowly, explain every pose and offer easier options throughout.',
+      '天上不会掉馅饼。服务器带宽与过境专线成本高昂，绝大多数宣称「永久免费无限流量」的独立 VPN 或来路不明的公益节点，往往存在三大风险：1）记录并倒卖用户的浏览日志、Cookie 甚至跨境电商/加密货币凭证；2）将用户的设备带宽作为商业住宅代理池（Botnet）出售给第三方；3）晚高峰严重限速、频繁断流且随时关停。如果您只是想先零成本验证效果，建议选择提供「新用户正规免费试用」的专线机场（如宇宙云、极连云、一翻云），或者直接选择光速云轻量版（99元/年，折合每月仅 8 元，每天不到 3 毛钱）。',
   },
   {
-    question: 'What should I bring and wear?',
+    question: '2026 年最推荐哪几家稳定、便宜且不跑路的专线机场？',
     answer:
-      'Wear comfortable clothes you can stretch in and bring a water bottle. Mats, blocks, straps, bolsters and towels are all provided free of charge.',
+      '根据本站对 42 家机场的综合评测，Top 4 主力推荐依次为：1）光速云（TOP 1，2020年老牌 IEPL+VLESS，轻量版 99元/年折合 8元/月，极速版 25元/月，另有 147元/247GB 永久包，9折码 AMM）；2）微风网络（TOP 2，全节点 10Gbps IEPL+VLESS 不限设备数，清风 137元/年，9折码 flat888）；3）暮光加速（TOP 3，BGP智能调度+专线出口，109元/年及 200GB–2000GB 四档永久包，88折码 muguang5555）；4）飞猫云（TOP 4，自带免配置专属客户端，学生版 84元/年折合 7元/月，9折码 flycat888）。',
   },
   {
-    question: 'Can I practice with an injury or health condition?',
+    question: 'IEPL / IPLC 专线机场和普通中转梯子有什么本质区别？',
     answer:
-      'Often, yes. Let your coach know before class so they can adapt poses for you. For recent surgery or serious conditions, please check with your doctor first.',
+      '普通公网中转机场的数据包仍然需要经过国际公网出口（GFW 重点监控与限速路段），一到晚上 20:00–23:00 高峰期或特殊敏感时期，极易出现高丢包、断流和 IP 被封。而 IEPL（国际以太网专线）与 IPLC（国际私有租用线路）是通过广深沪机房的内网物理专线直接点对点过境到香港或海外机房，绕过了公网拥堵出口，因此延迟极低（香港通常 20–40ms）、晚高峰 4K 视频秒开且抗封锁能力呈指数级提升。',
   },
   {
-    question: 'How do I cancel or reschedule a booking?',
+    question: '为什么现在主流机场都在从 SSR / VMess 转向 VLESS 和 Trojan 协议？',
     answer:
-      'Cancel from your account up to four hours before class and the credit returns to you automatically. Late cancellations count as a used class.',
+      '早期 ShadowsocksR (SSR) 与传统 VMess 协议的流量特征已被深度包检测（DPI）模型广泛识别，且多层冗余加密在高速下载时消耗大量手机与电脑 CPU。新一代 VLESS 协议采用极简无状态头部设计，配合 TLS/Reality 握手机制，不仅吞吐效率更高、移动端更省电，抗主动探测能力也大幅增强。注意：使用 VLESS 节点时，请确保客户端为 Clash Verge Rev、FlClash、v2rayN、v2rayNG 或 Shadowrocket 等现代内核版本。',
   },
   {
-    question: 'Can I pause my membership while traveling?',
+    question: '我想用 ChatGPT、Claude 3.7 和观看 Netflix 4K，应该怎么选节点？',
     answer:
-      'Yes. Pause for up to eight weeks per year at no cost, and your on-demand library access continues while you are away.',
+      'OpenAI (ChatGPT)、Anthropic (Claude) 和 Google Gemini 对香港 IP 及部分机房滥用 IP 有限制。在使用光速云、微风网络等专线机场时，建议将客户端路由模式设为「规则 (Rule)」，并在 AI 分流策略组中固定选择「美国、日本、新加坡或台湾」节点，避免频繁跨国切换 IP 触发风控。观看 Netflix、Disney+ 或巴哈姆特动画疯时，则可直接选择带有解锁标识的港、台、日、新节点。',
+  },
+  {
+    question: '什么是「按量不限时 / 永久流量包」？适合什么样的人买？',
+    answer:
+      '按量不限时流量包是指一次性付费买断固定配额的流量（例如光速云「致敬斯诺克147」套餐：147元买断 247GB；二猫云 99元/100GB；Firefly 用 8 折码后 80元/100GB；暮光加速 219元/200GB 起），没有每月清零的时间限制，用完为止。它非常适合两类人：一是平时只查资料、发邮件、偶尔用 AI，一年总流量不超过 200GB 的轻度用户；二是已经有主力包月机场，想花百元左右配一个永不过期的「第二备用梯子」以防万一的老手。',
+  },
+  {
+    question: 'Windows、Mac、安卓和 iPhone 苹果手机分别推荐用什么代理客户端？',
+    answer:
+      '1）Windows 与 macOS 电脑：首选 Clash Verge Rev 或 FlClash（原生支持 Mihomo 内核与 VLESS），Windows 老手也可用 v2rayN；2）Android 安卓手机：首选 FlClash 或 v2rayNG（请下载 arm64-v8a.apk，切勿使用已停更的老版 CFA）；3）iPhone / iPad：首选美区 App Store 的 Shadowrocket（小火箭，$2.99）或 Stash（$3.99），若只有免费美区 Apple ID 可直接免费下载 Karing 或 sing-box；4）若是纯新手不想折腾，可直接选用自带官方一键客户端的飞猫云、无忧链接或 Firefly。',
+  },
+  {
+    question: '如何最大限度防范机场跑路或失联风险？',
+    answer:
+      '遵循三条黄金风控法则：第一，主力长周期套餐优先选择运营满 5–6 年的老牌机场（如 2020 年成立的光速云、星岛梦，或 2021 年成立的 WgetCloud、青云梯）；第二，对于成立不满 1 年的新锐低价机场，坚持「先试用或先月付、最多买百元以内小额年付（如 68–89 元/年）」，切勿在全新小机场一次性充值数百元多年套餐；第三，手头始终保留一主一备两个不同团队的机场订阅（例如光速云包月/包年 + 二猫云/Firefly 不限时包），任何时候都不会失联。',
   },
 ];

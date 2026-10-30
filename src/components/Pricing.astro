@@ -16,9 +16,9 @@ import { pricingSection } from '../data/home';
 >
   <div class="container">
     <SectionHeading id="memberships-title" title={pricingSection.title} intro={pricingSection.intro}>
-      <div class="billing" role="group" aria-label="Billing period">
-        <button type="button" aria-pressed="true" data-billing="monthly">Monthly</button>
-        <button type="button" aria-pressed="false" data-billing="yearly">Yearly <em>{pricing.yearlySavings}</em></button>
+      <div class="billing" role="group" aria-label="计费周期切换">
+        <button type="button" aria-pressed="true" data-billing="monthly">按月付费</button>
+        <button type="button" aria-pressed="false" data-billing="yearly">按年折算 <em>{pricing.yearlySavings}</em></button>
       </div>
     </SectionHeading>
     <div class="plans">
