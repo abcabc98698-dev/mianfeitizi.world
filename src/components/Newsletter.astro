@@ -1,0 +1,62 @@
+---
+import { newsletter } from '../data/home';
+import { site } from '../config/site';
+
+interface Props {
+  flush?: boolean;
+}
+
+const { flush = true } = Astro.props;
+const action = site.forms.newsletterAction;
+---
+
+<section class:list={['section', { 'section--flush-top': flush }]} aria-labelledby="news-title">
+  <div class="container">
+    <div class="newsletter">
+      <div>
+        <h2 id="news-title">{newsletter.title}</h2>
+        <p>{newsletter.intro}</p>
+      </div>
+      <div>
+        <form class="subscribe" method={action ? 'post' : 'get'} action={action || undefined} data-newsletter novalidate>
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input
+            id="newsletter-email"
+            name="email"
+            type="email"
+            placeholder={newsletter.placeholder}
+            autocomplete="email"
+            required
+            aria-describedby="newsletter-msg"
+          />
+          <button class="btn btn--dark" type="submit">{newsletter.buttonLabel}</button>
+        </form>
+        <p class="subscribe__msg" id="newsletter-msg" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter]').forEach((form) => {
+    const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+    const msg = document.getElementById(input?.getAttribute('aria-describedby') ?? '');
+    if (!input || !msg) return;
+
+    form.addEventListener('submit', (event) => {
+      if (!input.value || !input.checkValidity()) {
+        event.preventDefault();
+        input.setAttribute('aria-invalid', 'true');
+        msg.textContent = 'Please enter a valid email address.';
+        input.focus();
+        return;
+      }
+      input.removeAttribute('aria-invalid');
+      if (!form.getAttribute('action')) {
+        event.preventDefault();
+        msg.textContent = 'Thank you for subscribing! Check your inbox this Sunday for your weekly practice note.';
+        input.value = '';
+      }
+    });
+  });
+</script>
